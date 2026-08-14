@@ -1,0 +1,2131 @@
+
+User attachment
+apa kamu bisa buatkan aku website seperti ini : https://unitedcarriers.com/ untuk akun sosial mediaku Majang Mejeng media : https://www.instagram.com/majangmejeng_/ dengan logonya yang aku kirim ini. sebelum membuat , buatkan aku PRD lengkapnya dulu
+
+Searching the web
+
+apa kamu bisa ?
+
+Bisa. Bahkan bisa dibuat dengan pendekatan yang jauh lebih cocok untuk Majang Mejeng Media, bukan sekadar meniru United Carriers.
+
+Saya sudah cek website referensinya. United Carriers Struktur utamanya memang kuat: hero statement → positioning → angka/statistik → layanan → value proposition → portfolio/testimonial → insights → FAQ → CTA, dengan visual editorial yang sangat dominan. 
+
+Untuk Majang Mejeng, saya akan adaptasikan konsep tersebut menjadi website media/creative publication modern, dengan logo yang kamu kirim sebagai identitas utama.
+
+Konsep awal yang saya bayangkan
+MAJANG MEJENG MEDIA
+
+Media yang bikin sesuatu jadi layak dilihat.
+
+Bukan website perusahaan biasa, tetapi terasa seperti digital media house / creative media platform.
+
+Struktur besarnya bisa seperti:
+
+Homepage
+
+Full-screen hero
+Logo Majang Mejeng
+Headline besar
+Featured story
+Latest content
+Trending
+Social media feed
+Statistik/impact
+Collaboration/partner
+CTA
+Stories
+
+Berita
+Lifestyle
+Entertainment
+Local culture
+People
+Community
+Business
+Viral/trending
+Majang Mejeng Original
+
+Video
+Interview
+Podcast
+Reels/TikTok
+Photo story
+Talent / Creator
+
+Profil talent
+KOL
+Creator
+Host
+Photographer
+Videographer
+Work With Us
+
+Brand collaboration
+Advertisement
+Campaign
+Event coverage
+Content production
+KOL/creator collaboration
+About
+
+Filosofi Majang Mejeng
+Vision
+Mission
+Editorial identity
+Contact
+
+WhatsApp
+Email
+Instagram
+TikTok
+YouTube
+Collaboration form
+CMS/Admin
+
+Upload artikel
+Upload foto
+Upload video
+Manage kategori
+Manage author
+Manage featured content
+Manage homepage
+Manage advertiser/partner
+Analytics
+Yang paling penting
+Saya tidak menyarankan menyalin United Carriers 1:1. Kita ambil design language-nya: typography besar, whitespace, editorial layout, motion, image-driven storytelling, scrolling transitions, dan struktur conversion-nya—lalu dibuat menjadi identitas Majang Mejeng sendiri.
+
+Logo yang kamu kirim juga sudah bisa dijadikan basis design system: orange sebagai warna utama, hitam sebagai foundation, dengan kemungkinan menggunakan off-white sebagai warna editorial.
+
+Dan nantinya website bisa dibuat dengan stack modern seperti:
+
+Next.js + TypeScript + Tailwind + Framer Motion + Supabase + Vercel
+
+sehingga bisa dikembangkan dari website company-profile sederhana menjadi platform media dengan CMS dan database.
+
+Kalau tujuanmu adalah benar-benar membangunnya, saya sarankan kita mulai dari PRD V1.0 yang sangat lengkap terlebih dahulu, baru setelah PRD dikunci kita masuk ke UX/UI → architecture → database → development → deployment.
+
+oke langsung buatkan semua saja , aku ingin bangun segera
+
+Bisa. Saya akan arahkan proyek ini sebagai website media yang benar-benar siap dikembangkan, bukan sekadar landing page.
+
+Scope yang akan menjadi baseline:
+
+PRD lengkap + acceptance criteria
+UX/UI & design system berdasarkan logo Majang Mejeng
+Homepage editorial premium terinspirasi pola visual United Carriers, tetapi bukan copy/clone
+Stories / artikel
+Video & social content
+Creator / talent
+Portfolio & collaboration
+About & Contact
+CMS/admin
+SEO + Open Graph
+Analytics
+Responsive mobile-first
+Performance & accessibility
+Supabase untuk database/CMS
+Next.js + TypeScript + Tailwind + Framer Motion
+Vercel untuk deployment
+Struktur yang nantinya mudah dihubungkan dengan Instagram/TikTok/YouTube
+Saya juga akan menggunakan logo yang kamu upload sebagai aset brand utama dan mempertahankan karakter orange–black Majang Mejeng.
+
+Karena kamu ingin langsung dibangun, prosesnya saya arahkan menjadi:
+
+PRD → Architecture → UI → Frontend → CMS/Database → QA → Deployment
+
+Bukan berhenti di dokumen konsep saja.
+
+ya langsung saja, tetapi apakah kamu sudah tes masuk ke website united carrier seluruhnya
+
+Ya. Sekarang saya sudah audit website United Carriers secara cukup menyeluruh, bukan hanya melihat homepage.
+
+Saya membuka dan membaca struktur beberapa halaman utama: Home, About, Services, Industries, Insights, Community, Careers, Contact, serta halaman legal yang tersedia. Jadi ketika kita membangun Majang Mejeng, saya tidak akan menebak-nebak struktur referensinya. 
+
+Yang saya temukan dari United Carriers
+Mereka sebenarnya bukan sekadar website dengan desain bagus. Arsitekturnya cukup matang:
+
+1. Global navigation
+
+Home
+About
+Services
+Industries
+Insights
+Careers
+Community
+Contact
+Work With Us
+2. Homepage
+
+Opening/hero statement yang sangat besar
+CTA
+Intro positioning
+Statistik/metrics
+Service ecosystem
+Value proposition
+Reliability section
+Repeated service showcase
+Industry positioning
+Testimonial
+Partner logos
+Insights/news
+FAQ
+Contact
+Footer
+Homepage-nya sendiri memiliki ratusan elemen/section dalam struktur halaman yang saya akses. 
+
+3. Services
+Bukan hanya daftar layanan. Mereka membuat service architecture lengkap, termasuk:
+
+Core services
+Integrated solutions
+Detail setiap service
+Technology/operations
+CTA
+Related services
+Halaman Services yang saya akses memiliki hampir 500 baris struktur konten. 
+
+4. Industries
+Mereka membuat landing section khusus untuk setiap industri, lengkap dengan:
+
+problem
+positioning
+explanation
+why choose us
+CTA
+Jadi bukan sekadar grid kategori. 
+
+5. Insights
+Ada sistem editorial/news dengan kategori dan konten yang bisa berkembang. 
+
+6. Careers
+Ada recruitment flow, job listing, filter kategori/lokasi/type, sampai application. 
+
+7. Contact
+Ada enquiry flow, appointment, contact information, office information, dan response expectation. 
+
+Dan ini mengubah rancangan Majang Mejeng
+Setelah melihat keseluruhannya, saya tidak akan membuat Majang Mejeng sebagai website company profile biasa.
+
+Kita akan mengambil arsitektur dan prinsip UX-nya, tetapi mengubah model bisnisnya menjadi:
+
+MEDIA × CREATIVE × COMMUNITY × CULTURE
+
+Sehingga kira-kira struktur finalnya:
+
+MAJANG MEJENG
+│
+├── HOME
+│
+├── STORIES
+│   ├── Latest
+│   ├── Trending
+│   ├── Lifestyle
+│   ├── Entertainment
+│   ├── Culture
+│   ├── People
+│   ├── Business
+│   └── Local
+│
+├── ORIGINALS
+│   ├── Video
+│   ├── Interview
+│   ├── Podcast
+│   ├── Documentary
+│   └── Photo Story
+│
+├── CREATOR
+│   ├── Talent
+│   ├── Creator
+│   ├── Host
+│   └── Photographer
+│
+├── COLLABORATION
+│   ├── Brand Campaign
+│   ├── Content Production
+│   ├── Event Coverage
+│   ├── KOL / Creator
+│   └── Advertising
+│
+├── COMMUNITY
+│
+├── ABOUT
+│
+└── CONTACT
+Dan di belakangnya:
+
+ADMIN / CMS
+│
+├── Dashboard
+├── Stories
+├── Categories
+├── Authors
+├── Media Library
+├── Video
+├── Creator
+├── Campaign
+├── Advertiser
+├── Community
+├── Homepage Builder
+├── SEO
+├── Analytics
+└── Settings
+Yang akan saya pertahankan dari referensi
+Typography besar
+Editorial composition
+Asymmetrical layouts
+Full-width imagery
+Strong whitespace
+Scroll-driven storytelling
+Micro-interactions
+Animated counters
+Sticky navigation
+Horizontal/vertical content movement
+Image reveal
+Hover interaction
+Strong CTA
+Modular content sections
+Premium agency/media feel
+Yang tidak akan saya copy
+Copywriting United Carriers
+Struktur bisnis mereka secara literal
+Identitas visual mereka
+Asset/gambar mereka
+Logo mereka
+Konten mereka
+Layout pixel-for-pixel
+Kita akan membuat Majang Mejeng sebagai brand sendiri.
+
+Satu hal penting sebelum coding
+Saya sudah punya logo Majang Mejeng yang kamu upload, tetapi untuk website production saya akan membuat versi asset yang lebih tepat: favicon, logo desktop, logo mobile, monochrome, dan transparent version.
+
+Karena kamu mengatakan "langsung saja", saya akan menjadikan ini sebagai build production, bukan prototype kosong.
+
+Stack yang saya rekomendasikan:
+
+Next.js + TypeScript + Tailwind CSS + Framer Motion + Supabase + Vercel
+
+Dan CMS-nya kita desain sejak awal supaya kamu nanti tidak perlu mengubah kode setiap kali ingin upload artikel/konten.
+
+Saya juga sudah cek koneksi GitHub yang tersedia saat ini dan belum ada repository yang terdeteksi, jadi tahap implementasi belum punya repo tujuan yang bisa saya edit/deploy langsung. Setelah workspace/repository tersedia, struktur ini bisa langsung dijadikan basis build.
+
+oke langsung saja buatkan PRD lengkapnya
+
+PRD — MAJANG MEJENG MEDIA
+Product Requirements Document — V1.0
+
+Status: Ready for Design & Development
+Product: Majang Mejeng Media
+Platform: Web — Desktop / Tablet / Mobile
+Primary language: Bahasa Indonesia
+Brand: Majang Mejeng
+Reference: United Carriers — architectural/UX inspiration, not a visual or content clone. United Carriers uses a strong editorial-style hierarchy with large hero messaging, service/content modules, metrics, CTA, insights, community and contact flows. 
+
+1. EXECUTIVE SUMMARY
+Majang Mejeng Media akan dibangun sebagai digital media & creative platform, bukan sekadar company profile.
+
+Website berfungsi sebagai:
+
+Media publication + content showcase + creator ecosystem + creative agency + collaboration platform.
+
+Tujuan utamanya adalah mengubah akun sosial media Majang Mejeng menjadi sebuah brand media yang mempunyai rumah digital sendiri.
+
+Website harus mampu menjawab:
+
+"Majang Mejeng itu siapa, kontennya apa, siapa yang mereka representasikan, dan bagaimana brand/creator bisa bekerja sama?"
+
+2. PRODUCT VISION
+Vision
+Membangun media digital lokal yang modern, berkarakter, relevan, dan mempunyai daya komersial, dengan konten sebagai pusat pengalaman.
+
+Positioning
+Majang Mejeng Media
+
+Tempat cerita, orang, budaya, dan hal-hal menarik tampil dan menjadi perhatian.
+
+Alternatif brand statement:
+
+See it. Feel it. Majangin.
+
+atau:
+
+Yang menarik, kita majang.
+
+Tagline final dapat ditentukan pada fase branding.
+
+3. PRODUCT OBJECTIVES
+Primary Objectives
+Membangun official digital presence Majang Mejeng.
+Meningkatkan kredibilitas brand.
+Menjadi pusat seluruh konten Majang Mejeng.
+Mengarahkan traffic dari Instagram/TikTok/YouTube ke website.
+Membuat konten lebih searchable melalui Google.
+Membangun database konten jangka panjang.
+Membuka kanal kerja sama dengan brand.
+Menjadi portfolio profesional untuk media/creative services.
+Membuka peluang monetisasi.
+Membangun fondasi media platform yang dapat berkembang.
+4. BUSINESS OBJECTIVES
+Website harus mendukung minimal lima revenue channel:
+
+A. Brand Partnership
+Brand membayar Majang Mejeng untuk campaign.
+
+B. Sponsored Content
+Artikel/video/content berbayar.
+
+C. Event Coverage
+Majang Mejeng menjadi media partner.
+
+D. Content Production
+Produksi:
+
+Reels
+TikTok
+Photography
+Video
+Interview
+Campaign
+E. Creator/KOL Collaboration
+Menghubungkan brand dengan creator/talent.
+
+5. TARGET AUDIENCE
+Primary Audience
+18–35 tahun
+Karakter:
+
+aktif Instagram
+TikTok user
+mengikuti tren
+tertarik lifestyle
+entertainment
+local culture
+food
+people
+event
+community
+Secondary Audience
+Brand / Business Owner
+Mencari:
+
+media exposure
+advertising
+content production
+KOL
+event coverage
+Tertiary Audience
+Creator
+influencer
+photographer
+videographer
+host
+artist
+public figure
+local talent
+6. CORE USER PERSONAS
+Persona 01 — Audience
+Nama: Raka
+Umur: 23
+Device: Mobile
+Goal: mencari konten menarik.
+
+Behavior:
+
+Instagram → klik link → membaca → share → kembali ke Instagram.
+
+Persona 02 — Brand
+Nama: Dimas
+Umur: 32
+Role: Marketing/Business Owner
+
+Goal:
+
+"Saya ingin tahu apakah Majang Mejeng bisa membantu campaign saya."
+
+Membutuhkan:
+
+portfolio
+audience
+services
+contact
+media kit
+Persona 03 — Creator
+Nama: Naya
+Umur: 25
+Role: Creator
+
+Goal:
+
+"Saya ingin bergabung / mendapatkan project."
+
+7. PRODUCT PRINCIPLES
+Website harus mengikuti prinsip:
+
+01. Content First
+Konten lebih penting daripada dekorasi.
+
+02. Visual First
+Majang Mejeng adalah media visual.
+
+03. Fast
+Website harus terasa cepat.
+
+04. Mobile First
+Mayoritas audience kemungkinan datang dari social media melalui mobile.
+
+05. Editorial
+Website harus terasa seperti media profesional.
+
+06. Discoverable
+Konten harus mudah ditemukan Google.
+
+07. Commercially Ready
+Website harus mampu menghasilkan leads.
+
+8. INFORMATION ARCHITECTURE
+/
+│
+├── /stories
+│   ├── /latest
+│   ├── /trending
+│   ├── /lifestyle
+│   ├── /entertainment
+│   ├── /culture
+│   ├── /people
+│   ├── /business
+│   └── /local
+│
+├── /story/[slug]
+│
+├── /originals
+│   ├── /video
+│   ├── /interview
+│   ├── /podcast
+│   ├── /documentary
+│   └── /photo-story
+│
+├── /creators
+│   └── /creator/[slug]
+│
+├── /community
+│
+├── /collaboration
+│   ├── /brand-campaign
+│   ├── /content-production
+│   ├── /event-coverage
+│   └── /kol
+│
+├── /about
+│
+├── /contact
+│
+└── /admin
+9. GLOBAL NAVIGATION
+Desktop:
+
+[ M LOGO ]
+
+Stories
+Originals
+Creators
+Community
+Collaboration
+
+                         Search
+                         Instagram
+                         [Work With Us]
+Mobile:
+
+[LOGO]                 [MENU]
+
+────────────────────────
+
+MENU
+
+Stories
+Originals
+Creators
+Community
+Collaboration
+About
+Contact
+
+[ WORK WITH US ]
+Navigation harus sticky.
+
+10. HOMEPAGE
+Homepage merupakan halaman paling penting.
+
+Struktur:
+
+NAVIGATION
+
+HERO
+
+FEATURED STORY
+
+EDITORIAL INTRO
+
+TRENDING
+
+LATEST STORIES
+
+ORIGINALS
+
+PEOPLE / CREATOR
+
+COMMUNITY
+
+COLLABORATION
+
+SOCIAL MEDIA
+
+PARTNERS
+
+CTA
+
+FOOTER
+11. HERO SECTION
+Hero harus menjadi signature Majang Mejeng.
+
+Visual
+Full viewport.
+
+Background:
+
+photography
+video
+editorial collage
+motion
+Foreground:
+
+MAJANG MEJENG
+
+Yang menarik,
+kita majang.
+
+[ EXPLORE STORIES ]
+[ WORK WITH US ]
+Logo dapat muncul sebagai animated brand mark.
+
+12. HERO BEHAVIOR
+Saat page load:
+
+Logo animation.
+headline reveal.
+image reveal.
+CTA fade-in.
+Saat scroll:
+
+parallax
+image scale
+text movement
+section transition
+Tetapi animasi harus subtle, bukan gimmick.
+
+13. FEATURED STORY
+Format:
+
+FEATURED
+
+[ LARGE IMAGE ]
+
+CATEGORY
+Lifestyle
+
+Judul artikel yang sangat
+besar dan editorial.
+
+Read story →
+Desktop:
+
+60% image / 40% content
+
+Mobile:
+
+image → content
+
+14. EDITORIAL INTRO
+Contoh:
+
+KAMI TIDAK CUMA MELIHAT APA YANG TERJADI.
+KAMI MELIHAT APA YANG LAYAK DIMAJANG.
+
+Paragraph pendek:
+
+Majang Mejeng menjadi ruang untuk cerita, orang, karya, budaya, dan momen yang menarik untuk dilihat lebih dekat.
+
+CTA:
+
+ABOUT MAJANG MEJENG →
+
+15. STATISTICS / IMPACT
+Inspirasi dari pola metrics United Carriers, yang menggunakan angka untuk memperkuat credibility. 
+
+Untuk Majang Mejeng:
+
+XX+
+Stories Published
+
+XXK+
+Social Reach
+
+XX+
+Creators
+
+XX+
+Brand Collaborations
+Catatan: angka tidak boleh dibuat-buat. CMS harus memungkinkan admin mengubah metrics.
+
+16. TRENDING
+Section:
+
+TRENDING NOW
+
+01  Story
+02  Story
+03  Story
+04  Story
+Desktop dapat menggunakan horizontal scroll.
+
+Mobile:
+
+vertical list.
+
+Setiap item:
+
+ranking
+thumbnail
+category
+title
+date
+views
+17. LATEST STORIES
+Grid editorial:
+
+LATEST STORIES
+
+[Large] [Small]
+[Large] [Small]
+[Small] [Small] [Small]
+Card:
+
+image
+category
+title
+excerpt
+date
+author
+CTA:
+
+VIEW ALL STORIES
+
+18. STORIES SYSTEM
+Stories adalah core content system.
+
+Setiap artikel memiliki:
+
+Title
+Slug
+Excerpt
+Content
+Featured Image
+Gallery
+Video
+Category
+Tags
+Author
+Publish Date
+Updated Date
+SEO Title
+SEO Description
+OG Image
+Related Stories
+Status
+Status:
+
+Draft
+Review
+Scheduled
+Published
+Archived
+19. ARTICLE PAGE
+Struktur:
+
+CATEGORY
+
+TITLE BESAR
+
+Excerpt
+
+AUTHOR
+DATE
+READ TIME
+
+HERO IMAGE
+
+ARTICLE BODY
+
+IMAGE / VIDEO
+
+QUOTE
+
+ARTICLE BODY
+
+RELATED STORIES
+
+SHARE
+
+CTA
+Social sharing:
+
+WhatsApp
+Instagram copy/share
+Facebook
+X
+Copy Link
+20. ORIGINALS
+Originals menjadi tempat konten produksi Majang Mejeng.
+
+Kategori:
+
+Video
+Interview
+Podcast
+Documentary
+Photo Story
+Hero:
+
+MAJANG MEJENG ORIGINALS
+
+Stories that deserve more than
+a scroll.
+21. VIDEO SYSTEM
+Video dapat berasal dari:
+
+YouTube
+Instagram
+TikTok
+Vimeo
+uploaded MP4
+Prioritas:
+
+Embed, bukan menyimpan semua video besar di server.
+
+Video card:
+
+[THUMBNAIL]
+▶
+
+CATEGORY
+VIDEO
+
+Title
+22. CREATOR DIRECTORY
+Creator page:
+
+CREATORS
+
+[Creator]
+[Creator]
+[Creator]
+[Creator]
+Profile:
+
+PHOTO
+
+NAME
+@username
+
+CATEGORY
+
+Bio
+
+Social links
+
+Selected work
+
+Collaboration CTA
+Kategori:
+
+Creator
+Host
+Photographer
+Videographer
+Artist
+Influencer
+23. COMMUNITY
+Terinspirasi dari pendekatan Community pada United Carriers, tetapi untuk Majang Mejeng menjadi ecosystem/community discovery. 
+
+Isi:
+
+community profile
+local movement
+event
+initiative
+local figure
+social campaign
+24. COLLABORATION
+Ini adalah halaman money page.
+
+Hero:
+
+LET'S MAKE SOMETHING
+WORTH LOOKING AT.
+
+Services:
+
+Brand Campaign
+Campaign strategy + distribution.
+
+Content Production
+Photo / video / reels.
+
+Event Coverage
+Event documentation & publication.
+
+Creator Campaign
+Creator/KOL activation.
+
+Media Partnership
+Publication & media exposure.
+
+25. COLLABORATION FLOW
+Choose Service
+       ↓
+Tell Us About Your Project
+       ↓
+Contact Information
+       ↓
+Submit
+       ↓
+Admin Notification
+       ↓
+Lead Management
+       ↓
+Follow Up
+Form:
+
+Name
+Company
+WhatsApp
+Email
+Service
+Budget range
+Timeline
+Project description
+Attachment
+Consent
+26. CONTACT
+Inspired by the clear contact flow used by United Carriers, where enquiry details and response expectation are explicit. 
+
+Majang Mejeng:
+
+LET'S TALK.
+
+Have a story?
+Have a brand?
+Have an idea?
+
+Let's make it happen.
+
+[WhatsApp]
+[Instagram]
+[Email]
+
+CONTACT FORM
+27. ABOUT
+Struktur:
+
+Who We Are
+What We Believe
+What We Cover
+Our Approach
+Our People
+Our Mission
+28. SOCIAL MEDIA INTEGRATION
+Primary:
+
+Instagram — @majangmejeng_
+
+Secondary architecture:
+
+TikTok
+YouTube
+Facebook
+WhatsApp
+Website harus memiliki social links global.
+
+Untuk Instagram, jangan membuat dependency pada API yang tidak tersedia. Sistem harus memiliki fallback berupa:
+
+manually curated posts
+Instagram embed
+CMS social posts
+29. SEARCH
+Global search:
+
+Search stories, people, places...
+Search berdasarkan:
+
+title
+content
+category
+tag
+author
+creator
+URL:
+
+/search?q=...
+30. FILTER
+Stories:
+
+ALL
+LIFESTYLE
+ENTERTAINMENT
+CULTURE
+PEOPLE
+BUSINESS
+LOCAL
+TRENDING
+Filter harus client-friendly dan SEO-friendly.
+
+31. CMS / ADMIN
+Admin dashboard:
+
+DASHBOARD
+│
+├── Overview
+├── Stories
+├── Categories
+├── Tags
+├── Authors
+├── Media
+├── Originals
+├── Creators
+├── Community
+├── Collaboration Leads
+├── Homepage
+├── SEO
+├── Analytics
+└── Settings
+32. CMS DASHBOARD
+Dashboard menunjukkan:
+
+Stories Published
+Stories Draft
+Views
+Visitors
+Top Story
+Top Category
+Social Traffic
+Collaboration Leads
+33. STORY EDITOR
+Editor harus mendukung:
+
+headings
+paragraph
+image
+gallery
+quote
+video
+embed
+link
+divider
+CTA
+related content
+Editor tidak boleh memerlukan coding.
+
+34. HOMEPAGE BUILDER
+Admin dapat mengatur:
+
+Hero
+Featured Story
+Trending
+Latest
+Originals
+Creators
+Community
+Partners
+CTA
+Setiap section:
+
+Enabled / Disabled
+Order
+Content selection
+Headline
+Image
+CTA
+35. MEDIA LIBRARY
+Asset:
+
+JPG
+PNG
+WEBP
+SVG
+MP4
+Metadata:
+
+Filename
+Alt Text
+Caption
+Credit
+Copyright
+Upload Date
+Usage
+Image optimization wajib.
+
+36. DATABASE
+Recommended Supabase schema:
+
+users
+profiles
+roles
+
+stories
+story_categories
+categories
+tags
+story_tags
+authors
+
+media
+media_folders
+
+originals
+videos
+
+creators
+creator_categories
+
+communities
+
+partners
+campaigns
+services
+
+collaboration_leads
+
+homepage_sections
+
+navigation_items
+
+seo_metadata
+
+social_posts
+
+analytics_events
+37. ROLE & PERMISSION
+Super Admin
+Full access.
+
+Editor
+Stories + editorial.
+
+Author
+Create/edit own stories.
+
+Media Manager
+Media library.
+
+Commercial
+Collaboration leads.
+
+Contributor
+Submit content.
+
+38. AUTHENTICATION
+Supabase Auth.
+
+Support:
+
+email/password
+magic link
+Google optional
+Admin route:
+
+/admin
+Protected with role-based access control.
+
+39. DESIGN SYSTEM
+Primary Brand
+Logo user-provided:
+
+Orange + Black
+
+Initial palette:
+
+ORANGE
+#FF5A00
+
+BLACK
+#000000
+
+OFF WHITE
+#F5F3EE
+
+WHITE
+#FFFFFF
+
+DARK GRAY
+#161616
+Exact orange dapat disesuaikan setelah asset logo diproses.
+
+40. TYPOGRAPHY
+Karakter:
+
+Bold editorial sans-serif.
+
+Recommended:
+
+Display
+Space Grotesk / Archivo / Geist
+
+Body
+Inter / Geist Sans
+
+Accent
+Optional serif untuk editorial quotes.
+
+Prinsip:
+
+H1 = VERY LARGE
+H2 = LARGE
+Body = CLEAN
+Metadata = SMALL
+41. VISUAL LANGUAGE
+Majang Mejeng harus terasa:
+
+bold
+young
+editorial
+local
+confident
+playful
+premium
+contemporary
+Bukan:
+
+corporate kaku
+template berita
+blog generik
+terlalu banyak gradient
+terlalu banyak card rounded
+42. UI CHARACTER
+Gunakan:
+
+sharp corners
+strong borders
+oversized typography
+large imagery
+orange accent
+black sections
+white editorial sections
+Radius default:
+
+0–8px
+Jangan menggunakan UI SaaS-style yang terlalu rounded.
+
+43. MOTION SYSTEM
+Animation:
+
+Page entrance
+opacity + translate
+
+Image reveal
+clip-path
+
+Hover
+scale 1.02
+
+Text
+translateY
+
+Scroll
+Parallax ringan.
+
+Respect:
+
+prefers-reduced-motion
+44. RESPONSIVE
+Mobile
+320–767px
+
+Tablet
+768–1023px
+
+Desktop
+1024–1439px
+
+Large Desktop
+1440px+
+
+Layout harus berubah secara intentional, bukan hanya mengecil.
+
+45. PERFORMANCE TARGET
+Target:
+
+LCP < 2.5s
+INP < 200ms
+CLS < 0.1
+Target Lighthouse:
+
+Performance ≥ 90
+Accessibility ≥ 95
+SEO ≥ 95
+Best Practices ≥ 95
+46. SEO
+Setiap story:
+
+<title>
+<meta description>
+canonical
+OpenGraph
+Twitter card
+JSON-LD
+Structured data:
+
+Article
+Article / NewsArticle
+
+Organization
+Organization
+
+Person
+Person
+
+Breadcrumb
+BreadcrumbList
+
+47. SEO URL
+Gunakan:
+
+/stories/judul-artikel
+Bukan:
+
+/post?id=123
+Category:
+
+/stories/lifestyle
+Creator:
+
+/creators/nama-creator
+48. SITEMAP
+Automated:
+
+/sitemap.xml
+Include:
+
+stories
+categories
+creators
+originals
+49. ROBOTS
+robots.txt
+Admin harus:
+
+Disallow: /admin
+50. ANALYTICS
+Recommended:
+
+Vercel Analytics + Google Analytics 4
+
+Track:
+
+page view
+story view
+search
+CTA
+WhatsApp click
+Instagram click
+collaboration submit
+video play
+scroll depth
+51. CONVERSION TRACKING
+Event:
+
+cta_work_with_us
+contact_submit
+whatsapp_click
+instagram_click
+story_share
+video_play
+creator_contact
+52. SECURITY
+Requirement:
+
+HTTPS
+Supabase RLS
+secure auth
+protected admin routes
+server-side validation
+rate limiting
+spam protection
+file type validation
+upload size limits
+environment variables
+no exposed service keys
+53. FORM SECURITY
+Collaboration/contact:
+
+validation
+honeypot
+rate limit
+CAPTCHA optional
+sanitize input
+54. TECHNICAL STACK
+Frontend
+Next.js
+TypeScript
+Tailwind CSS
+Framer Motion
+Backend
+Supabase
+PostgreSQL
+Supabase Auth
+Supabase Storage
+Deployment
+Vercel
+Analytics
+Vercel Analytics
+Google Analytics
+55. COMPONENT ARCHITECTURE
+components/
+│
+├── layout/
+│   ├── Header
+│   ├── Footer
+│   └── MobileMenu
+│
+├── editorial/
+│   ├── Hero
+│   ├── FeaturedStory
+│   ├── StoryCard
+│   ├── StoryGrid
+│   ├── Trending
+│   └── ArticleBody
+│
+├── media/
+│   ├── VideoCard
+│   ├── VideoPlayer
+│   └── Gallery
+│
+├── creator/
+│   ├── CreatorCard
+│   └── CreatorProfile
+│
+├── collaboration/
+│   ├── ServiceCard
+│   └── CollaborationForm
+│
+├── ui/
+│   ├── Button
+│   ├── Input
+│   ├── Modal
+│   └── Section
+│
+└── motion/
+56. PROJECT STRUCTURE
+majang-mejeng/
+│
+├── app/
+│   ├── page.tsx
+│   ├── stories/
+│   ├── originals/
+│   ├── creators/
+│   ├── community/
+│   ├── collaboration/
+│   ├── about/
+│   ├── contact/
+│   ├── search/
+│   └── admin/
+│
+├── components/
+├── lib/
+├── hooks/
+├── types/
+├── public/
+├── supabase/
+└── styles/
+57. CONTENT MODEL — STORY
+Story
+├── id
+├── title
+├── slug
+├── excerpt
+├── body
+├── featured_image
+├── category_id
+├── author_id
+├── status
+├── published_at
+├── updated_at
+├── reading_time
+├── view_count
+├── seo_title
+├── seo_description
+└── og_image
+58. CONTENT WORKFLOW
+IDEA
+ ↓
+DRAFT
+ ↓
+EDITOR REVIEW
+ ↓
+APPROVED
+ ↓
+SCHEDULE
+ ↓
+PUBLISHED
+ ↓
+DISTRIBUTED
+ ↓
+ANALYZED
+59. EDITORIAL WORKFLOW
+Step 1
+Content idea.
+
+Step 2
+Creator/author membuat draft.
+
+Step 3
+Editor review.
+
+Step 4
+SEO optimization.
+
+Step 5
+Publish.
+
+Step 6
+Share ke:
+
+Instagram
+TikTok
+WhatsApp
+YouTube
+Step 7
+Analyze performance.
+
+60. MONETIZATION ARCHITECTURE
+Future:
+
+Sponsored Story
+Sponsored Video
+Brand Campaign
+Event Coverage
+Media Partnership
+Creator Campaign
+Banner Advertising
+Affiliate
+Membership
+Event
+Website sejak awal harus memiliki field:
+
+Sponsored
+Partner
+Advertiser
+Campaign
+agar nantinya tidak perlu migrasi besar.
+
+61. ADVERTISING
+Phase 2.
+
+Ad placements:
+
+Homepage Hero
+Between Stories
+Article
+Sidebar
+Footer
+Tetapi jangan mengorbankan UX.
+
+62. MEDIA KIT
+Phase 2:
+
+About Majang Mejeng
+Audience
+Reach
+Demographics
+Content Categories
+Previous Campaigns
+Creator Network
+Services
+Rate Card
+Contact
+CTA:
+
+DOWNLOAD MEDIA KIT
+
+63. PARTNER SYSTEM
+Partner database:
+
+Partner
+Logo
+Name
+Website
+Category
+Campaign
+Description
+Featured
+64. ADMIN LEAD MANAGEMENT
+Collaboration leads:
+
+NEW
+CONTACTED
+QUALIFIED
+PROPOSAL
+NEGOTIATION
+WON
+LOST
+Fields:
+
+Company
+Contact
+Service
+Budget
+Timeline
+Notes
+Assigned
+Status
+Ini membuat website tidak hanya menjadi portfolio, tetapi juga menjadi lead acquisition system.
+
+65. EMAIL NOTIFICATION
+Saat collaboration form masuk:
+
+ADMIN EMAIL
+
+New Collaboration Lead
+
+Company:
+Contact:
+Service:
+Budget:
+Message:
+User mendapatkan:
+
+Thank you.
+We'll get back to you soon.
+66. WHATSAPP
+CTA global:
+
+Let's Talk on WhatsApp
+
+Nomor WhatsApp harus diletakkan sebagai environment/config variable sehingga mudah diganti tanpa perubahan komponen.
+
+67. ACCESSIBILITY
+Target:
+
+WCAG 2.2 AA
+
+Wajib:
+
+semantic HTML
+alt text
+keyboard navigation
+focus states
+sufficient contrast
+aria labels
+reduced motion
+form error messages
+68. IMAGE POLICY
+Semua gambar harus memiliki:
+
+alt
+credit
+copyright
+Admin tidak boleh mengupload asset tanpa metadata untuk konten editorial penting.
+
+69. CONTENT MODERATION
+Future:
+
+Draft
+Review
+Approved
+Rejected
+Published
+Archived
+Tidak ada user-generated content yang langsung publish.
+
+70. ERROR STATES
+Harus tersedia:
+
+404
+Looks like this story got lost.
+
+CTA:
+
+Back to Majang Mejeng
+
+500
+Something went wrong.
+
+CTA:
+
+Try Again
+
+Empty search
+Nothing interesting here... yet.
+
+71. LOADING STATES
+Gunakan skeleton:
+
+Image Skeleton
+Text Skeleton
+Card Skeleton
+Jangan menggunakan spinner penuh halaman kecuali diperlukan.
+
+72. PWA — FUTURE
+Phase 3 dapat menambahkan:
+
+installable web app
+offline caching
+push notifications
+Tidak masuk MVP.
+
+73. MVP
+MVP harus mencakup:
+
+Public
+Homepage
+Stories
+Story detail
+Categories
+Originals
+Creators
+Collaboration
+About
+Contact
+Search
+Admin
+Login
+Stories CRUD
+Categories
+Media
+Authors
+Homepage content
+Collaboration leads
+Infrastructure
+Supabase
+Vercel
+SEO
+Analytics
+responsive
+security
+74. PHASE 2
+Tambahkan:
+
+media kit
+campaign portfolio
+advanced creator database
+social feed
+newsletter
+advertising
+advanced analytics
+editorial scheduling
+campaign management
+75. PHASE 3
+Platform expansion:
+
+membership
+community accounts
+event registration
+marketplace
+creator marketplace
+mobile app/PWA
+personalized feed
+recommendation engine
+76. ACCEPTANCE CRITERIA — HOMEPAGE
+Homepage dianggap selesai jika:
+
+responsive
+hero berfungsi
+navigation berfungsi
+featured story berasal dari CMS
+trending berasal dari CMS
+latest stories berasal dari CMS
+CTA collaboration berfungsi
+social links aktif
+SEO metadata aktif
+Lighthouse memenuhi target
+tidak ada broken link
+77. ACCEPTANCE CRITERIA — CMS
+Admin harus dapat:
+
+login
+membuat story
+mengedit story
+publish
+schedule
+delete/archive
+upload image
+mengatur category
+mengatur author
+mengatur homepage
+melihat collaboration leads
+Tanpa menyentuh source code.
+
+78. ACCEPTANCE CRITERIA — COLLABORATION
+User dapat:
+
+membuka Collaboration;
+memilih service;
+mengisi form;
+submit;
+melihat confirmation;
+admin menerima lead;
+lead masuk database.
+79. ACCEPTANCE CRITERIA — SEO
+Setiap published story harus:
+
+mempunyai canonical;
+mempunyai title;
+mempunyai description;
+mempunyai OG image;
+dapat diindex;
+masuk sitemap;
+mempunyai structured data.
+80. ACCEPTANCE CRITERIA — MOBILE
+Di mobile:
+
+navigation usable;
+typography tidak overflow;
+image tidak terpotong secara buruk;
+CTA mudah disentuh;
+form usable;
+video responsive;
+horizontal scroll tidak merusak page;
+tidak ada layout shift besar.
+81. QUALITY GATE
+Sebelum production:
+
+Functional
+100% critical flows pass.
+
+Visual
+Tidak ada:
+
+broken layout
+overflow
+blurry asset
+missing image
+broken animation
+SEO
+Score ≥95.
+
+Accessibility
+Score ≥95.
+
+Performance
+Target ≥90.
+
+Security
+Tidak ada:
+
+exposed secrets
+public admin
+unrestricted database write
+insecure upload
+82. ANALYTICS KPI
+Setelah launch, ukur:
+
+Audience
+users
+sessions
+pageviews
+Content
+top stories
+average engagement
+reading time
+scroll depth
+Acquisition
+Instagram
+TikTok
+Google
+direct
+referral
+Commercial
+collaboration leads
+WhatsApp clicks
+email clicks
+conversion rate
+83. NORTH STAR METRIC
+Untuk fase awal:
+
+Qualified Audience Engagement
+
+Bukan sekadar pageview.
+
+Formula sederhana:
+
+Engaged Visitors
++
+Story Reads
++
+Social Shares
++
+Collaboration Intent
+Tujuan akhirnya adalah:
+
+attention → trust → engagement → collaboration
+
+84. DESIGN DIRECTION
+Saya merekomendasikan visual final:
+
+BLACK
+sebagai visual authority.
+
+ORANGE
+sebagai Majang Mejeng signature.
+
+OFF-WHITE
+sebagai editorial canvas.
+
+Dengan komposisi:
+
+BLACK
+████████████
+
+OFF WHITE
+░░░░░░░░░░░░
+
+ORANGE
+████
+Orange tidak boleh memenuhi seluruh layar. Ia harus menjadi visual accent yang langsung diasosiasikan dengan Majang Mejeng.
+
+85. HOMEPAGE WIREFRAME
+┌──────────────────────────────────────────┐
+│ M          STORIES ORIGINALS    WORK     │
+├──────────────────────────────────────────┤
+│                                          │
+│                                          │
+│            MAJANG MEJENG                 │
+│                                          │
+│       YANG MENARIK, KITA MAJANG.         │
+│                                          │
+│        [ EXPLORE ] [ WORK WITH US ]      │
+│                                          │
+└──────────────────────────────────────────┘
+
+┌──────────────────────────────────────────┐
+│ FEATURED                                  │
+│                                          │
+│     ┌─────────────────┐                  │
+│     │                 │  STORY TITLE     │
+│     │     IMAGE       │                  │
+│     │                 │  CATEGORY        │
+│     └─────────────────┘                  │
+└──────────────────────────────────────────┘
+
+              TRENDING NOW
+
+01 ─────────────────────────
+02 ─────────────────────────
+03 ─────────────────────────
+
+LATEST STORIES
+
+┌─────────────┐ ┌──────────┐
+│             │ │          │
+│    IMAGE    │ │  IMAGE   │
+│             │ │          │
+└─────────────┘ └──────────┘
+
+ORIGINALS
+
+        VIDEO / INTERVIEW
+
+CREATORS
+
+COMMUNITY
+
+COLLABORATION
+
+"LET'S MAKE SOMETHING
+ WORTH LOOKING AT."
+
+[ WORK WITH US ]
+
+FOOTER
+86. BRAND EXPERIENCE
+Ketika seseorang masuk website, dalam 5 detik pertama mereka harus memahami:
+
+1. Ini Majang Mejeng.
+2. Ini media/creative platform.
+3. Mereka punya konten menarik.
+4. Saya bisa menjelajah.
+5. Saya bisa bekerja sama dengan mereka.
+
+87. WHAT WE ARE NOT BUILDING
+Penting.
+
+Website ini bukan:
+
+portal berita generik;
+blog WordPress template;
+landing page satu halaman;
+copy website United Carriers;
+Instagram wrapper;
+portfolio kosong.
+Kita membangun digital media infrastructure.
+
+88. DEVELOPMENT ROADMAP
+PHASE 0 — Foundation
+Brand asset
+↓
+Repository
+↓
+Project setup
+↓
+Supabase
+↓
+Database
+PHASE 1 — Design
+Design system
+↓
+Homepage
+↓
+Components
+↓
+Responsive
+↓
+Motion
+PHASE 2 — Content
+CMS
+↓
+Stories
+↓
+Originals
+↓
+Creators
+PHASE 3 — Commercial
+Collaboration
+↓
+Lead system
+↓
+Contact
+↓
+Analytics
+PHASE 4 — QA
+Functional QA
+↓
+Responsive QA
+↓
+SEO QA
+↓
+Performance QA
+↓
+Security QA
+PHASE 5 — Production
+GitHub
+↓
+Vercel
+↓
+Custom Domain
+↓
+Analytics
+↓
+Production
+89. DEFINITION OF DONE
+Majang Mejeng V1.0 dianggap production ready apabila:
+
+✓ Public website
+✓ CMS
+✓ Authentication
+✓ Database
+✓ Stories
+✓ Categories
+✓ Authors
+✓ Media library
+✓ Originals
+✓ Creators
+✓ Collaboration
+✓ Contact
+✓ Search
+✓ SEO
+✓ Analytics
+✓ Responsive
+✓ Accessibility
+✓ Security
+✓ Performance
+✓ Error handling
+✓ Deployment
+seluruhnya berfungsi.
+
+90. FINAL PRODUCT ARCHITECTURE
+                     MAJANG MEJENG
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+          AUDIENCE                    BUSINESS
+             │                           │
+     ┌───────┼────────┐          ┌───────┼────────┐
+     │       │        │          │       │        │
+   Stories Originals Creators  Campaign Production Media
+     │       │        │          │       │        │
+     └───────┴────────┴──────────┴───────┴────────┘
+                           │
+                         CMS
+                           │
+                       Supabase
+                           │
+                       PostgreSQL
+                           │
+                         Vercel
+91. KEPUTUSAN ARSITEKTUR FINAL
+Frontend: Next.js + TypeScript
+UI: Tailwind CSS
+Motion: Framer Motion
+Database: PostgreSQL via Supabase
+Auth: Supabase Auth
+Storage: Supabase Storage
+Deployment: Vercel
+Analytics: Vercel Analytics + GA4
+SEO: Next.js Metadata + JSON-LD
+Content: Headless CMS custom berbasis Supabase
+
+Arsitektur ini sengaja dibuat agar Majang Mejeng tidak perlu dibangun ulang ketika jumlah konten, creator, partner, atau campaign bertambah.
+
+Kesimpulan
+PRD ini menjadikan Majang Mejeng Media sebagai platform media yang dapat berkembang, bukan website statis.
+
+Referensi United Carriers kita ambil terutama pada information architecture, editorial hierarchy, modular sections, strong CTA, credibility/metrics, content discovery, dan conversion flow. Website referensi memang menggunakan kombinasi tersebut secara konsisten di Home, Services, Insights, Careers, Community, dan Contact. 
+
+Tahap berikutnya sudah jelas:
+
+PRD V1.0
+   ↓
+DATABASE SCHEMA
+   ↓
+DESIGN SYSTEM
+   ↓
+WIREFRAME
+   ↓
+UI HIGH-FIDELITY
+   ↓
+NEXT.JS IMPLEMENTATION
+   ↓
+SUPABASE CMS
+   ↓
+QA
+   ↓
+VERCEL
+   ↓
+MAJANGMEJENG.ID / DOMAIN FINAL
+PRD ini saya jadikan baseline spesifikasi pembangunan V1.0.
+
+
+
+
+Sources
+
+
+
+
+
+
+
+
+
+Inputs
+
+IMG_1920.png

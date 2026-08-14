@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Majang Mejeng Media"
+description = "Website editorial dan creative media untuk Majang Mejeng, menampilkan stories, originals, creators, community, dan kanal kolaborasi brand dalam satu rumah digital yang berani dan berkarakter."
+version = "1.0.0"
+id = "artifacts/majang-mejeng"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26197
+
+[services.development]
+run = "pnpm --filter @workspace/majang-mejeng run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/majang-mejeng", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/majang-mejeng/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26197"
+BASE_PATH = "/"
