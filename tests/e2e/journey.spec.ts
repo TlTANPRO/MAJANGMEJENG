@@ -13,12 +13,11 @@ test.describe('V5.1 user journeys', () => {
     await expect(page.getByRole('button', { name: /Share/i })).toBeVisible();
   });
 
-  test('social entry routes preserve context', async ({ page }) => {
-    for (const platform of ['instagram', 'tiktok']) {
-      await page.goto(`./go/${platform}`);
-      await expect(page.getByText(new RegExp(`From ${platform}`, 'i'))).toBeVisible();
-      await expect(page.getByRole('link', { name: /Continue the story/i })).toBeVisible();
-    }
+  test('social current exposes Instagram and TikTok', async ({ page }) => {
+    await page.goto('./');
+    await expect(page.getByText('THE SOCIAL CURRENT')).toBeVisible();
+    await expect(page.locator('a[href="https://www.instagram.com/majangmejeng_/"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="tiktok.com/@majangmejeng_"]').first()).toBeVisible();
   });
 
   test('collaboration form validates and completes', async ({ page }) => {
