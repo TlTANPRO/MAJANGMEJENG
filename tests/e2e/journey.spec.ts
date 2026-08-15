@@ -1,38 +1,30 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('V8 user journeys', () => {
-  test('story journey and search work', async ({ page }) => {
+test.describe('V9 user journeys', () => {
+  test('editorial story journey works', async ({ page }) => {
     await page.goto('./');
-    await page.getByRole('button', { name: 'Search' }).click();
-    const input = page.getByPlaceholder('Cari cerita, orang, tempat, ide...');
-    await expect(input).toBeVisible({ timeout: 10000 });
-    await input.fill('riuhnya');
-    const result = page.locator('.v8-result').filter({ hasText: /Di balik riuhnya pasar, ada kota yang sedang belajar mendengar/i }).first();
-    await expect(result).toBeVisible();
-    await result.click();
-    await expect(page).toHaveURL(/\/MAJANGMEJENG\/stories\//);
-    await expect(page.getByRole('article')).toBeVisible();
-    await expect(page.getByRole('button', { name: /Share/i })).toBeVisible();
+    await page.getByRole('button', { name: /Explore stories/i }).click();
+    await expect(page).toHaveURL(/#stories$/);
+    await expect(page.getByText('01 / STORIES')).toBeVisible();
+    await page.getByRole('button', { name: 'Story 3' }).click();
+    await expect(page.locator('.v9-story-copy')).toContainText('CULTURE');
   });
 
-  test('social current exposes Instagram and TikTok', async ({ page }) => {
+  test('social current exposes official channels', async ({ page }) => {
     await page.goto('./');
-    await expect(page.getByText('SOCIAL CURRENT')).toBeVisible();
-    await expect(page.locator('a[href="https://www.instagram.com/majangmejeng_/"]').first()).toBeVisible();
-    await expect(page.locator('a[href*="tiktok.com/@majangmejeng_"]').first()).toBeVisible();
+    await expect(page.getByText('03 / SOCIAL CURRENT')).toBeVisible();
+    const instagram = page.locator('a[href="https://www.instagram.com/majangmejeng_/"]').first();
+    const tiktok = page.locator('a[href*="tiktok.com/@majangmejeng_"]').first();
+    await expect(instagram).toBeVisible();
+    await expect(tiktok).toBeVisible();
   });
 
-  test('collaboration form validates and completes', async ({ page }) => {
-    await page.goto('./collaborate');
-    const submit = page.getByRole('button', { name: /Kirim brief/i });
-    await expect(submit).toBeVisible();
-    await submit.click();
-    await expect(page.locator('input:invalid').first()).toBeVisible();
-    await page.getByRole('textbox', { name: 'Nama' }).fill('Majang Mejeng Test');
-    await page.getByRole('textbox', { name: 'Email' }).fill('test@example.com');
-    await page.getByRole('combobox', { name: 'Kebutuhan' }).selectOption('Campaign');
-    await page.getByRole('textbox', { name: 'Brief' }).fill('V8 E2E test');
-    await submit.click();
-    await expect(page.getByText(/Brief sudah masuk/i)).toBeVisible();
+  test('mobile menu navigates without route assumptions', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'Mobile-only journey.');
+    await page.goto('./');
+    await page.getByRole('button', { name: 'Open menu' }).click();
+    await expect(page.locator('.v9-overlay')).toBeVisible();
+    await page.locator('.v9-overlay').getByRole('button', { name: /stories/i }).click();
+    await expect(page.getByText('01 / STORIES')).toBeVisible();
   });
 });
