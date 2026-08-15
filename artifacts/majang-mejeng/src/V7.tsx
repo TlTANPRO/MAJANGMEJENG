@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import V6 from './V6';
+import './social-feed.css';
 
 /** V7 orchestration layer. Keeps the proven V6 route/component contract while
  * adding a first-party social feed bridge. The bridge only renders media that
