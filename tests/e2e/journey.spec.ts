@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('V11 user journeys', () => {
+test.describe('V12 user journeys', () => {
   test('navigation preserves canonical URL', async ({ page }) => {
     await page.goto('./');
     const canonical = await page.evaluate(() => location.href);
     await page.getByRole('button', { name: 'MENU' }).click();
-    const drawer = page.locator('.drawer');
+    const drawer = page.locator('.v12-drawer');
     await expect(drawer.getByText('NAVIGATION / 001')).toBeVisible();
     await drawer.getByRole('button', { name: /PEOPLE/i }).click();
     await expect(page.locator('#people')).toBeVisible();
@@ -16,13 +16,13 @@ test.describe('V11 user journeys', () => {
   test('search opens a story reader', async ({ page }) => {
     await page.goto('./');
     await page.getByRole('button', { name: 'Search' }).click();
-    const layer = page.locator('.search-layer');
+    const layer = page.locator('.v12-search');
     const input = layer.getByPlaceholder(/People, places, culture/i);
     await expect(input).toBeVisible();
     await input.fill('people');
-    await layer.locator('.search-results').getByRole('button', { name: /The people behind the everyday/i }).click();
-    await expect(page.locator('.story-reader')).toBeVisible();
-    await expect(page.locator('.story-reader').getByText(/Portraits, makers/i)).toBeVisible();
+    await layer.getByRole('button', { name: /The people behind the everyday/i }).click();
+    await expect(page.locator('.v12-reader')).toBeVisible();
+    await expect(page.locator('.v12-reader').getByText(/Portraits, makers/i)).toBeVisible();
   });
 
   test('official social channels are reachable', async ({ page }) => {
@@ -36,7 +36,7 @@ test.describe('V11 user journeys', () => {
     test.skip(!isMobile, 'Mobile-only journey.');
     await page.goto('./');
     await page.getByRole('button', { name: 'MENU' }).click();
-    const drawer = page.locator('.drawer');
+    const drawer = page.locator('.v12-drawer');
     await expect(drawer.getByText('NAVIGATION / 001')).toBeVisible();
     await drawer.getByRole('button', { name: /PEOPLE/i }).click();
     await expect(page.locator('#people')).toBeVisible();
