@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: majang-mejeng-v11-e2e
+  cancel-in-progress: true
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
