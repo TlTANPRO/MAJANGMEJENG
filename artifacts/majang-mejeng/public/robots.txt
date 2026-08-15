@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://tltanpro.github.io/MAJANGMEJENG/sitemap.xml
