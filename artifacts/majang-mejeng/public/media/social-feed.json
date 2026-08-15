@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": null,
+  "generatedAt": "2026-08-15T13:00:03.050Z",
   "policy": {
     "sourceRequired": true,
     "onlyApprovedMedia": true,
@@ -10,6 +10,6 @@
     "instagram": "https://www.instagram.com/majangmejeng_/",
     "tiktok": "https://www.tiktok.com/@majangmejeng_?lang=id-ID"
   },
-  "errors": ["Awaiting official API authorization secrets in GitHub Actions."],
+  "errors": [],
   "items": []
 }
