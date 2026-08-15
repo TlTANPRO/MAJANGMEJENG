@@ -10,7 +10,10 @@ test.describe('V11 homepage', () => {
     }
     await expect(page.getByRole('button', { name: /ENTER THE CURRENT/i })).toBeVisible();
     await page.locator('#geo').scrollIntoViewIfNeeded();
-    await expect(page.getByText('INDONESIA', { exact: false }).first()).toBeVisible();
+    const geo = page.locator('#geo');
+    await expect(geo).toBeVisible();
+    await expect(geo.locator('.geo-copy')).toContainText('INDONESIA');
+    await expect(geo.locator('iframe[title="Peta Kabupaten Lumajang"]')).toBeAttached();
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await expect(page.getByText('HAVE SOMETHING', { exact: false })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
