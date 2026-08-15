@@ -1,8 +1,8 @@
-name: Majang Mejeng V6 E2E
+name: Majang Mejeng V9 E2E
 
 on:
   push:
-    branches: [main]
+    branches: [main, v9-rebuild]
   workflow_dispatch:
 
 permissions:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.12.4
+          version: 10.15.0
           run_install: false
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -33,12 +33,12 @@ jobs:
         run: PORT=4173 BASE_PATH=/MAJANGMEJENG/ NODE_ENV=production pnpm --dir artifacts/majang-mejeng run build
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
-      - name: Run V6 browser journeys
+      - name: Run V9 browser journeys
         run: pnpm exec playwright test tests/e2e
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: majang-mejeng-v6-playwright-report
+          name: majang-mejeng-v9-playwright-report
           path: artifacts/majang-mejeng/playwright-report
           if-no-files-found: ignore
