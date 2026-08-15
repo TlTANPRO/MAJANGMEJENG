@@ -4,7 +4,8 @@ import { Link, Route, Switch, useLocation, Router } from 'wouter';
 import logoAsset from '@assets/IMG_1920_1786731585196.png';
 
 const logo=logoAsset, IG='https://www.instagram.com/majangmejeng_/', TT='https://www.tiktok.com/@majangmejeng_?lang=id-ID';
-const img=['/editorial-portrait.jpg','/coastline.jpg','/studio-table.jpg'];
+const MEDIA_BASE=import.meta.env.BASE_URL;
+const img=[`${MEDIA_BASE}editorial-portrait.jpg`,`${MEDIA_BASE}coastline.jpg`,`${MEDIA_BASE}studio-table.jpg`];
 type Story={slug:string;category:string;title:string;dek:string;image:string;read:string;date:string};
 const stories:Story[]=[
 {slug:'pasar-santa-dan-kota-yang-mendengar',category:'Places',title:'Di balik riuhnya pasar, ada kota yang sedang belajar mendengar',dek:'Ruang kecil, suara besar. Menyusuri tempat-tempat yang membuat sebuah kota terasa punya nadi.',image:img[0],read:'05 min',date:'12 Aug 2026'},
