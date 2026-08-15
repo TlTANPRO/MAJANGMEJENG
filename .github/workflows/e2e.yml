@@ -11,9 +11,6 @@ permissions:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: artifacts/majang-mejeng
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,7 +30,7 @@ jobs:
       - name: Install Playwright browser
         run: pnpm exec playwright install --with-deps chromium
       - name: Run V4 browser tests
-        run: pnpm exec playwright test ../../tests/e2e
+        run: pnpm exec playwright test tests/e2e
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
