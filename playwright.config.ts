@@ -16,7 +16,7 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   webServer: {
-    command: 'cd artifacts/majang-mejeng && PORT=4173 BASE_PATH=/MAJANGMEJENG/ NODE_ENV=production pnpm run build && pnpm exec vite preview --host 0.0.0.0 --port 4173',
+    command: 'cd artifacts/majang-mejeng && PORT=4173 BASE_PATH=/MAJANGMEJENG/ NODE_ENV=production pnpm run build && PORT=4173 BASE_PATH=/MAJANGMEJENG/ NODE_ENV=production pnpm exec vite preview --host 0.0.0.0 --port 4173',
     url: 'http://127.0.0.1:4173/MAJANGMEJENG/',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
