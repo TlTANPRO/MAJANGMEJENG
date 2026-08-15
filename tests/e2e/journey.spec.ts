@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('V5.1 user journeys', () => {
+test.describe('V6 user journeys', () => {
   test('story journey and search work', async ({ page }) => {
     await page.goto('./');
     await page.getByRole('button', { name: 'Search' }).click();
@@ -28,7 +28,8 @@ test.describe('V5.1 user journeys', () => {
     await expect(page.locator('input:invalid').first()).toBeVisible();
     await page.getByPlaceholder('Nama lengkap').fill('Majang Mejeng Test');
     await page.getByPlaceholder('email@contoh.com').fill('test@example.com');
-    await page.getByPlaceholder(/Tulis konteks/i).fill('V5.1 E2E test');
+    await page.getByPlaceholder(/Tulis konteks/i).fill('V6 E2E test');
+    await page.locator('select').selectOption('Campaign');
     await submit.click();
     await expect(page.getByText(/Terima kasih\. Ceritanya sudah masuk/i)).toBeVisible();
   });
