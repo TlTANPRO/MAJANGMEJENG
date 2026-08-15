@@ -1,0 +1,17 @@
+{
+  "version": 7,
+  "account": {
+    "instagram": "https://www.instagram.com/majangmejeng_/",
+    "tiktok": "https://www.tiktok.com/@majangmejeng_?lang=id-ID"
+  },
+  "policy": {
+    "onlyApprovedMedia": true,
+    "neverFabricateSocialContent": true,
+    "selfHostOptimizedAssets": true,
+    "sourceRequired": true
+  },
+  "featured": [],
+  "instagram": [],
+  "tiktok": [],
+  "notes": "Populate through the approved social ingestion workflow. Empty arrays are intentional until real account media is authorized/imported."
+}
