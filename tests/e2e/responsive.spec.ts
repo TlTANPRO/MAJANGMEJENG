@@ -7,9 +7,11 @@ test.describe('V11 responsive behavior', () => {
     const menu = page.getByRole('button', { name: 'MENU' });
     await expect(menu).toBeVisible();
     await menu.click();
-    await expect(page.getByText('NAVIGATION / 001')).toBeVisible();
-    await expect(page.getByRole('button', { name: /PEOPLE/i })).toBeVisible();
-    await page.getByRole('button', { name: /PEOPLE/i }).click();
+    const drawer = page.locator('.drawer');
+    await expect(drawer.getByText('NAVIGATION / 001')).toBeVisible();
+    const people = drawer.getByRole('button', { name: /PEOPLE/i });
+    await expect(people).toBeVisible();
+    await people.click();
     await expect(page.locator('#people')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
     expect(await page.evaluate(() => location.hash)).toBe('');
