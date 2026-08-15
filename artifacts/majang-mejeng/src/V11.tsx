@@ -11,7 +11,14 @@ const stories=[
  {title:'Culture in motion.',type:'CULTURE',text:'Food, rituals, visual language, music and scenes changing beneath the surface.',image:images.culture},
 ];
 
-function jump(id:string){document.getElementById(id)?.scrollIntoView({behavior:'auto',block:'start'});history.replaceState(null,'',`#${id}`)}
+function jump(id:string){
+ const el=document.getElementById(id);
+ if(!el)return;
+ el.scrollIntoView({behavior:'auto',block:'start'});
+ // Keep one canonical URL. Section IDs remain in the DOM for navigation/accessibility,
+ // but never leak into the browser address bar.
+ if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+}
 
 export default function V11(){
  const [menu,setMenu]=useState(false); const [searchOpen,setSearchOpen]=useState(false); const [query,setQuery]=useState(''); const [story,setStory]=useState<number|null>(null); const [saved,setSaved]=useState<number[]>([]);
