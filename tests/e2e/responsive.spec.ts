@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('V5.1 responsive behavior', () => {
+test.describe('V6 responsive behavior', () => {
   test('mobile navigation opens and remains usable', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Mobile navigation is intentionally hidden at desktop breakpoints.');
     await page.goto('./');
     const menu = page.getByRole('button', { name: 'Menu' });
     await expect(menu).toBeVisible();
     await menu.click();
-    const mobileMenu = page.locator('.mobile-menu');
+    const mobileMenu = page.locator('.menu-panel');
     const storiesLink = mobileMenu.getByRole('link', { name: /Stories/i }).first();
     await expect(storiesLink).toBeVisible();
     await storiesLink.click();
