@@ -2,7 +2,7 @@ name: Majang Mejeng CI + GitHub Pages
 
 on:
   push:
-    branches: [main, v9-rebuild]
+    branches: [main, v10-immersive-rebuild]
   pull_request:
     branches: [main]
   workflow_dispatch:
