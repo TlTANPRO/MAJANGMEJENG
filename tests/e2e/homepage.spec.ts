@@ -18,9 +18,11 @@ test.describe('V11 homepage', () => {
   test('story reader opens and save state changes', async ({ page }) => {
     await page.goto('./');
     await page.getByRole('button', { name: /OPEN FEATURE/i }).first().click();
-    await expect(page.locator('.story-reader')).toBeVisible();
-    await expect(page.getByText(/SAVE STORY|SAVED/).last()).toBeVisible();
-    await page.getByRole('button', { name: /SAVE STORY/i }).click();
-    await expect(page.getByRole('button', { name: /SAVED/i })).toBeVisible();
+    const reader = page.locator('.story-reader');
+    await expect(reader).toBeVisible();
+    const save = reader.getByRole('button', { name: 'SAVE STORY', exact: true });
+    await expect(save).toBeVisible();
+    await save.click();
+    await expect(reader.getByRole('button', { name: 'SAVED', exact: true })).toBeVisible();
   });
 });
