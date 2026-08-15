@@ -18,8 +18,9 @@ test.describe('V9 homepage', () => {
 
   test('story controls change editorial content', async ({ page }) => {
     await page.goto('./');
-    const first = page.locator('.v9-story-copy h2').innerText();
+    const heading = page.locator('.v9-story-copy h2');
+    const first = await heading.innerText();
     await page.getByRole('button', { name: 'Story 2' }).click();
-    await expect(page.locator('.v9-story-copy h2')).not.toHaveText(first);
+    await expect(heading).not.toHaveText(first);
   });
 });
