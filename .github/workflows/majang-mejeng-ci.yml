@@ -2,7 +2,7 @@ name: Majang Mejeng CI + GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, v9-rebuild]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -50,6 +50,6 @@ jobs:
         with:
           path: artifacts/majang-mejeng/dist/public
       - name: Deploy to GitHub Pages
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         id: deployment
         uses: actions/deploy-pages@v4
