@@ -1,284 +1,73 @@
-import { useEffect, useState, type FormEvent } from 'react';
-import logoAsset from '@assets/IMG_1920_1786731585196.png';
-import {
-  ArrowDownRight,
-  ArrowUpRight,
-  Instagram,
-  MapPin,
-  Menu,
-  Search,
-  X,
-} from 'lucide-react';
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { ArrowDownRight, ArrowUpRight, Check, Menu, Search, X } from 'lucide-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
+import { Link, Route, Switch, Router as WouterRouter } from 'wouter';
+import logoAsset from '@assets/IMG_1920_1786731585196.png';
 
 const queryClient = new QueryClient();
 const logo = logoAsset;
+const INSTAGRAM = 'https://www.instagram.com/majangmejeng_/';
+const TIKTOK = 'https://www.tiktok.com/@majangmejeng_?lang=id-ID';
 
-type Story = {
-  id: string;
-  category: string;
-  title: string;
-  dek: string;
-  image: string;
-};
-
+type Story = { slug: string; category: string; title: string; dek: string; image: string; platform: string; read: string };
 const stories: Story[] = [
-  { id: '01', category: 'Kota', title: 'Di balik riuhnya Pasar Santa, ada kota yang sedang belajar mendengar', dek: 'Ruang kecil, suara besar. Menyusuri tempat-tempat yang membuat Jakarta terasa punya nadi.', image: '/editorial-portrait.jpg' },
-  { id: '02', category: 'Orang', title: 'Mereka yang memilih pulang, lalu membuat rumahnya sendiri', dek: 'Empat percakapan tentang pulang, tumbuh, dan keberanian untuk memulai lagi.', image: '/coastline.jpg' },
-  { id: '03', category: 'Karya', title: 'Zine, stiker, dan hal-hal kecil yang menolak hilang', dek: 'Catatan dari meja kerja para pembuat gambar di kota yang tidak pernah benar-benar tidur.', image: '/studio-table.jpg' },
+  { slug: 'pasar-santa-dan-kota-yang-mendengar', category: 'Kota', title: 'Di balik riuhnya pasar, ada kota yang sedang belajar mendengar', dek: 'Ruang kecil, suara besar. Menyusuri tempat-tempat yang membuat sebuah kota terasa punya nadi.', image: '/editorial-portrait.jpg', platform: 'Instagram · TikTok', read: '5 min' },
+  { slug: 'mereka-yang-memilih-pulang', category: 'Orang', title: 'Mereka yang memilih pulang, lalu membuat rumahnya sendiri', dek: 'Empat percakapan tentang pulang, tumbuh, dan keberanian untuk memulai lagi.', image: '/coastline.jpg', platform: 'TikTok', read: '4 min' },
+  { slug: 'zine-stiker-dan-hal-kecil', category: 'Karya', title: 'Zine, stiker, dan hal-hal kecil yang menolak hilang', dek: 'Catatan dari meja kerja para pembuat gambar yang menjaga ide tetap bergerak.', image: '/studio-table.jpg', platform: 'Instagram', read: '6 min' },
 ];
-
 const creators = [
-  { name: 'Rara Sekar', role: 'Musisi · Yogyakarta', quote: '“Yang lokal bukan batas. Ia adalah bahasa pertama.”', mark: 'RS' },
-  { name: 'Jalu Kancana', role: 'Fotografer · Bandung', quote: '“Saya memotret apa yang biasanya dilewati.”', mark: 'JK' },
-  { name: 'Nana Kautsar', role: 'Perupa · Makassar', quote: '“Bikin karya itu seperti bikin ruang untuk bernapas.”', mark: 'NK' },
+  { name: 'Rara Sekar', role: 'Musisi · Yogyakarta', mark: 'RS' },
+  { name: 'Jalu Kancana', role: 'Fotografer · Bandung', mark: 'JK' },
+  { name: 'Nana Kautsar', role: 'Perupa · Makassar', mark: 'NK' },
 ];
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
-}
+function track(event: string, data: Record<string, string> = {}) { window.dispatchEvent(new CustomEvent('mm:analytics', { detail: { event, ...data, path: location.pathname, at: new Date().toISOString() } })); }
+function Meta({ title, description }: { title: string; description: string }) { useEffect(() => { document.title = title; let m = document.querySelector('meta[name="description"]') as HTMLMetaElement | null; if (!m) { m = document.createElement('meta'); m.name = 'description'; document.head.appendChild(m); } m.content = description; }, [title, description]); return null; }
 
-function Router() {
-  const [location] = useLocation();
-  return (
-    <ErrorBoundary resetKey={location}>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route component={NotFound} />
-      </Switch>
-    </ErrorBoundary>
-  );
-}
-
-function Header({ onSearch }: { onSearch: () => void }) {
-  const [open, setOpen] = useState(false);
-  const nav = [
-    ['Stories', '#stories'],
-    ['People', '#people'],
-    ['Studio', '#studio'],
-    ['About', '#about'],
-  ];
-  const go = (href: string) => {
-    setOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-  };
-  return (
-    <header className="absolute left-0 right-0 top-0 z-40 text-[#f5f0e7]">
-      <div className="border-b border-[#f5f0e7]/15 bg-[#ff5600] px-5 py-2 text-[#15120f] md:px-10">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 font-mono-custom text-[9px] uppercase tracking-[.14em]">
-          <span className="flex items-center gap-2"><span className="pulse-dot h-1.5 w-1.5 rounded-full bg-[#15120f]" /> Field note 001 / Majang Mejeng is live</span>
-          <span className="hidden sm:inline">Jakarta · Indonesia · 06°12′S 106°49′E</span>
-        </div>
-      </div>
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between border-b border-[#f5f0e7]/15 px-5 py-5 md:px-10 md:py-6">
-        <button onClick={() => go('#top')} className="flex items-center gap-3" data-testid="button-brand-home" aria-label="Kembali ke atas">
-          <img src={logo} alt="Majang Mejeng" className="h-[50px] w-[50px] object-cover md:h-[58px] md:w-[58px]" />
-          <span className="hidden text-left font-mono-custom text-[9px] uppercase leading-[1.35] tracking-[.16em] text-[#f5f0e7]/65 lg:block">Majang<br />Mejeng<br />Media</span>
-        </button>
-        <nav className="hidden items-center gap-7 md:flex">
-          {nav.map(([label, href], index) => <button key={href} onClick={() => go(href)} className="flex items-center gap-2 font-mono-custom text-[10px] uppercase tracking-[.16em] text-[#ded6ca] transition-colors hover:text-[#ff5600]" data-testid={`link-nav-${label.toLowerCase()}`}><span className="text-[#ff5600]">0{index + 1}</span>{label}</button>)}
-        </nav>
-        <div className="flex items-center gap-3">
-          <button onClick={onSearch} className="flex items-center gap-2 font-mono-custom text-[11px] uppercase tracking-[.16em] text-[#ded6ca] transition-colors hover:text-[#ff5600]" data-testid="button-open-search"><Search size={16} strokeWidth={1.5} /><span className="hidden sm:inline">Cari</span></button>
-          <button onClick={() => setOpen(!open)} className="border border-[#f5f0e7]/50 p-2 md:hidden" data-testid="button-mobile-menu" aria-label="Buka menu"><Menu size={19} /></button>
-          <button onClick={() => go('#contact')} className="hidden rounded-full border border-[#ff5600] px-5 py-2.5 font-mono-custom text-[10px] uppercase tracking-[.16em] text-[#ff5600] transition-colors hover:bg-[#ff5600] hover:text-[#15120f] sm:block" data-testid="button-header-collaborate">Mulai ngobrol <ArrowUpRight className="ml-1 inline" size={14} /></button>
-        </div>
-      </div>
-      {open && <div className="border-t border-[#f5f0e7]/20 bg-[#15120f] px-5 py-5 md:hidden">
-        <nav className="grid gap-4">
-          {nav.map(([label, href]) => <button key={href} onClick={() => go(href)} className="flex items-center justify-between border-b border-[#f5f0e7]/15 pb-3 text-left font-display text-2xl" data-testid={`link-mobile-${label.toLowerCase()}`}>{label}<ArrowUpRight size={18} className="text-[#ff5600]" /></button>)}
-          <button onClick={() => go('#contact')} className="mt-2 bg-[#ff5600] px-4 py-3 text-left font-mono-custom text-xs uppercase tracking-widest text-[#15120f]" data-testid="button-mobile-collaborate">Mulai kolaborasi <ArrowUpRight className="inline" size={15} /></button>
-        </nav>
-      </div>}
-    </header>
-  );
-}
-
-function SignalGlobe() {
-  const nodes = [
-    { x: 122, y: 112, label: 'JKT / 01', className: 'node-jkt' },
-    { x: 262, y: 170, label: 'BDG / 02', className: 'node-bdg' },
-    { x: 158, y: 270, label: 'YGY / 03', className: 'node-ygy' },
-    { x: 330, y: 305, label: 'MKS / 04', className: 'node-mks' },
-  ];
-  return (
-    <div className="signal-globe-wrap" aria-label="Jaringan cerita Majang Mejeng di Indonesia">
-      <div className="globe-meta globe-meta-top"><span>Network / 04</span><span>Live index</span></div>
-      <svg className="signal-globe" viewBox="0 0 440 440" role="img" aria-hidden="true">
-        <defs>
-          <radialGradient id="globe-fill" cx="38%" cy="32%">
-            <stop offset="0%" stopColor="#ff7a38" stopOpacity=".8" />
-            <stop offset="44%" stopColor="#ff5600" stopOpacity=".34" />
-            <stop offset="100%" stopColor="#ff5600" stopOpacity=".03" />
-          </radialGradient>
-          <filter id="glow"><feGaussianBlur stdDeviation="5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-        </defs>
-        <circle cx="220" cy="220" r="180" fill="url(#globe-fill)" className="globe-surface" />
-        <circle cx="220" cy="220" r="180" className="globe-outline" />
-        <ellipse cx="220" cy="220" rx="75" ry="180" className="globe-latitude" />
-        <ellipse cx="220" cy="220" rx="135" ry="180" className="globe-latitude" />
-        <ellipse cx="220" cy="220" rx="180" ry="72" className="globe-longitude" />
-        <ellipse cx="220" cy="220" rx="180" ry="132" className="globe-longitude" />
-        <path d="M55 171 C135 112 166 288 248 194 S351 137 405 181" className="globe-route" />
-        <path d="M78 299 C153 250 195 127 272 217 S348 314 388 276" className="globe-route globe-route-muted" />
-        <path d="M121 111 L263 170 L158 270 L330 305" className="globe-route" />
-        {nodes.map((node) => <g key={node.label} className={`globe-node ${node.className}`}><circle cx={node.x} cy={node.y} r="7" filter="url(#glow)" /><circle cx={node.x} cy={node.y} r="2.5" fill="#f5f0e7" /></g>)}
-        <circle cx="220" cy="220" r="190" className="globe-orbit" />
-      </svg>
-      <div className="globe-node-labels">
-        {nodes.map((node) => <span key={node.label} className={`globe-node-label ${node.className}`} style={{ left: `${(node.x / 440) * 100}%`, top: `${(node.y / 440) * 100}%` }}>{node.label}</span>)}
-      </div>
-      <div className="globe-meta globe-meta-bottom"><span>Stories in motion</span><span>+ 17 field notes</span></div>
-    </div>
-  );
-}
-
-function SearchPanel({ query, setQuery, onClose }: { query: string; setQuery: (v: string) => void; onClose: () => void }) {
-  const found = stories.filter((story) => `${story.title} ${story.category}`.toLowerCase().includes(query.toLowerCase()));
-  return <div className="fixed inset-0 z-50 flex items-start justify-center bg-[#15120f]/95 px-5 pt-[20vh] text-[#f5f0e7]">
-    <div className="w-full max-w-3xl">
-      <div className="mb-5 flex items-center justify-between"><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">Pencarian Majang</span><button onClick={onClose} data-testid="button-close-search" aria-label="Tutup pencarian"><X /></button></div>
-      <div className="flex items-center gap-4 border-b-2 border-[#f5f0e7] pb-4"><Search size={28} className="text-[#ff5600]" /><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Cari cerita, orang, atau kota..." className="w-full bg-transparent font-display text-3xl outline-none placeholder:text-[#f5f0e7]/35 md:text-5xl" data-testid="input-search" /></div>
-      <div className="mt-8 grid gap-2">{query && (found.length ? found.map((story) => <button key={story.id} onClick={() => { onClose(); document.querySelector('#stories')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center justify-between border-b border-[#f5f0e7]/20 py-4 text-left hover:text-[#ff5600]" data-testid={`result-search-${story.id}`}><span><span className="mr-4 font-mono-custom text-[10px] uppercase text-[#ff5600]">{story.category}</span>{story.title}</span><ArrowUpRight size={17} /></button>) : <p className="font-mono-custom text-xs text-[#f5f0e7]/55">Belum ada cerita dengan kata itu.</p>)}</div>
-    </div>
-  </div>;
-}
-
-function StoryCard({ story, onOpen }: { story: Story; onOpen: (story: Story) => void }) {
-  return <button onClick={() => onOpen(story)} className="story-link group relative block w-full text-left" data-testid={`card-story-${story.id}`}>
-    <div className="image-reveal relative aspect-[4/3] overflow-hidden border border-[#15120f]">
-      <img src={story.image} alt={story.title} className="h-full w-full object-cover" />
-      <span className="absolute left-3 top-3 bg-[#ff5600] px-2 py-1 font-mono-custom text-[9px] uppercase tracking-[.12em] text-[#15120f]">{story.category}</span>
-      <span className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f0e7] text-[#15120f]"><ArrowUpRight size={16} className="story-arrow" /></span>
-    </div>
-    <div className="border-x border-b border-[#15120f] px-4 pb-5 pt-4 md:px-5">
-      <span className="font-mono-custom text-[10px] text-current/60">CERITA / {story.id}</span>
-      <h3 className="mt-3 font-display text-[24px] font-semibold leading-[1.02] md:text-[29px]">{story.title}</h3>
-      <p className="mt-3 text-sm leading-relaxed text-current/65">{story.dek}</p>
-    </div>
-  </button>;
-}
-
-function Home() {
+function Shell({ children }: { children: ReactNode }) {
+  const [menu, setMenu] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const [activeStory, setActiveStory] = useState<Story | null>(null);
-  const [email, setEmail] = useState('');
-  const [sent, setSent] = useState(false);
-
-  useEffect(() => {
-    document.title = 'Majang Mejeng — Yang menarik, kami pajang.';
-  }, []);
-
-  const scroll = (id: string) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
-  const submitEmail = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (email.trim()) setSent(true);
-  };
-
-  return <main id="top" className="page-shell noise bg-[#f5f0e7]">
-    <Header onSearch={() => setSearchOpen(true)} />
-    {searchOpen && <SearchPanel query={query} setQuery={setQuery} onClose={() => { setSearchOpen(false); setQuery(''); }} />}
-
-    <section className="hero-field relative min-h-[760px] overflow-hidden bg-[#090a09] text-[#f5f0e7] md:min-h-[900px]">
-      <div className="hero-grid absolute inset-0 opacity-70" />
-      <div className="hero-vignette absolute inset-0" />
-      <div className="relative z-20 mx-auto grid max-w-[1440px] gap-2 px-5 pb-20 pt-44 md:grid-cols-[.94fr_1.06fr] md:px-10 md:pb-24 md:pt-52">
-        <div className="reveal relative z-10 max-w-[800px]">
-          <div className="mb-8 flex items-center gap-3 font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]"><span className="orange-rule" /> Media & creative platform / Indonesia</div>
-          <h1 className="hero-title font-display text-[clamp(4.3rem,10vw,10.8rem)] font-semibold leading-[.78] tracking-[-.085em]">Yang<br /><em className="not-italic text-[#ff5600]">menarik,</em><br />kami pajang<span className="text-[#ff5600]">.</span></h1>
-          <div className="mt-10 flex max-w-xl flex-col gap-8 md:flex-row md:items-end">
-            <p className="max-w-sm text-base leading-relaxed text-[#f5f0e7]/65 md:text-lg">Cerita, orang, budaya, dan momen yang layak dilihat dua kali. Dari sini, untuk siapa saja yang penasaran.</p>
-            <button onClick={() => scroll('#stories')} className="hero-pill flex w-fit items-center gap-3 rounded-full bg-[#f5f0e7] px-5 py-3 font-mono-custom text-[10px] uppercase tracking-[.14em] text-[#15120f] transition-colors hover:bg-[#ff5600]" data-testid="button-hero-explore">Jelajahi stories <ArrowDownRight size={15} /></button>
-          </div>
-        </div>
-        <div className="reveal reveal-delay-2 relative mt-2 min-h-[390px] md:mt-[-20px] md:min-h-[560px]">
-          <SignalGlobe />
-        </div>
+  const nav = [['Stories', '/stories'], ['Originals', '/originals'], ['Creators', '/creators'], ['Community', '/community']];
+  return <div className="min-h-screen bg-[#f5f0e7] text-[#15120f]">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#15120f]/95 text-[#f5f0e7] backdrop-blur">
+      <div className="flex h-16 items-center justify-between px-5 md:px-10">
+        <Link href="/" className="flex items-center gap-3"><img src={logo} className="h-10 w-10 object-cover" alt="Majang Mejeng Media"/><span className="hidden font-mono-custom text-[9px] uppercase tracking-[.16em] text-white/55 sm:block">Majang<br/>Mejeng<br/>Media</span></Link>
+        <nav className="hidden gap-7 md:flex">{nav.map(([label, href], i) => <Link key={href} href={href} className="font-mono-custom text-[10px] uppercase tracking-widest text-white/70 hover:text-[#ff5600]"><span className="mr-2 text-[#ff5600]">0{i + 1}</span>{label}</Link>)}</nav>
+        <div className="flex items-center gap-4"><button onClick={() => setSearchOpen(true)} aria-label="Search"><Search size={17}/></button><Link href="/work-with-us" className="hidden rounded-full border border-[#ff5600] px-4 py-2 font-mono-custom text-[9px] uppercase tracking-widest text-[#ff5600] sm:block">Work with us <ArrowUpRight className="inline" size={13}/></Link><button className="md:hidden" onClick={() => setMenu(!menu)} aria-label="Menu">{menu ? <X/> : <Menu/>}</button></div>
       </div>
-      <div className="absolute bottom-6 left-5 right-5 z-20 flex items-center justify-between border-t border-[#f5f0e7]/20 pt-4 font-mono-custom text-[10px] uppercase tracking-[.17em] text-[#f5f0e7]/50 md:left-10 md:right-10"><span>01 / 08 — Selamat datang di meja kami</span><span className="hidden md:inline">Scroll untuk membuka peta cerita <ArrowDownRight className="ml-2 inline" size={14} /></span></div>
-    </section>
-
-    <div className="overflow-hidden border-b border-[#15120f] bg-[#ff5600] py-4 text-[#15120f]">
-      <div className="marquee-track flex items-center gap-8 font-display text-2xl font-semibold uppercase tracking-[-.03em] md:text-4xl">{Array.from({ length: 2 }).map((_, i) => <span key={i} className="flex items-center gap-8">Orang menarik <span className="text-[#f5f0e7]">+</span> Tempat yang punya cerita <span className="text-[#f5f0e7]">+</span> Karya yang bikin berhenti <span className="text-[#f5f0e7]">+</span></span>)}</div>
-    </div>
-
-    <section className="bg-[#090a09] px-5 py-7 text-[#f5f0e7] md:px-10 md:py-10">
-      <div className="mx-auto grid max-w-[1440px] gap-5 md:grid-cols-[.7fr_1.3fr] md:items-center">
-        <div className="flex items-center gap-3 font-mono-custom text-[10px] uppercase tracking-[.16em] text-[#ff5600]"><MapPin size={15} /> Field index / 2026</div>
-        <div className="grid grid-cols-2 gap-4 border-l border-[#f5f0e7]/20 pl-5 sm:grid-cols-4">
-          {[['17', 'field notes'], ['08', 'active stories'], ['04', 'cities connected'], ['∞', 'ways to see']].map(([number, label]) => <div key={label}><strong className="font-display text-3xl font-semibold tracking-[-.06em] md:text-4xl">{number}</strong><span className="mt-1 block font-mono-custom text-[9px] uppercase tracking-[.12em] text-[#f5f0e7]/45">{label}</span></div>)}
-        </div>
-      </div>
-    </section>
-
-    <section id="about" className="mx-auto grid max-w-[1440px] gap-12 px-5 py-24 md:grid-cols-[.65fr_1fr] md:px-10 md:py-36">
-      <div><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">02 / Cara kami melihat</span><div className="orange-rule mt-5" /></div>
-      <div className="max-w-3xl"><h2 className="font-display text-[clamp(2.7rem,6vw,6.4rem)] font-semibold leading-[.9] tracking-[-.07em]">Dunia terlalu penuh untuk dilewati begitu saja<span className="text-[#ff5600]">.</span></h2><p className="mt-9 max-w-xl text-lg leading-relaxed text-[#15120f]/65">Majang Mejeng adalah rumah media dan creative platform untuk hal-hal yang sering luput dari headline. Kami bertemu dengan pembuat, penjelajah, dan penggerak; lalu membawa ceritanya lebih dekat.</p><button onClick={() => scroll('#stories')} className="mt-10 inline-flex items-center gap-3 border-b border-[#15120f] pb-2 font-mono-custom text-[11px] uppercase tracking-[.14em] transition-colors hover:border-[#ff5600] hover:text-[#ff5600]" data-testid="button-explore-stories">Lihat cerita pilihan <ArrowDownRight size={16} /></button></div>
-    </section>
-
-    <section id="stories" className="bg-[#dfd2bc] px-5 py-20 md:px-10 md:py-28">
-      <div className="mx-auto max-w-[1440px]">
-        <div className="mb-12 flex flex-wrap items-end justify-between gap-5"><div><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">03 / Pilihan redaksi</span><h2 className="mt-4 font-display text-5xl font-semibold tracking-[-.06em] md:text-7xl">Yang sedang <em className="not-italic text-[#ff5600]">dipajang.</em></h2></div><span className="max-w-[180px] font-mono-custom text-[10px] uppercase leading-relaxed tracking-[.1em] text-[#15120f]/55">Cerita baru, perspektif lama yang dibaca dengan cara berbeda.</span></div>
-        <div className="grid gap-6 md:grid-cols-3">{stories.map((story) => <StoryCard key={story.id} story={story} onOpen={setActiveStory} />)}</div>
-      </div>
-    </section>
-
-    <section id="people" className="bg-[#193c3b] px-5 py-20 text-[#f5f0e7] md:px-10 md:py-32">
-      <div className="mx-auto max-w-[1440px]">
-        <div className="grid gap-10 md:grid-cols-[.7fr_1.3fr]"><div><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">04 / Orang-orangnya</span><h2 className="mt-5 max-w-xs font-display text-5xl font-semibold leading-[.9] tracking-[-.06em] md:text-7xl">Bukan cuma nama di bio<span className="text-[#ff5600]">.</span></h2></div><p className="max-w-md self-end text-base leading-relaxed text-[#f5f0e7]/65">Di balik setiap karya, ada kepala, tangan, dan kegelisahan. Kenalan dengan beberapa orang yang sedang menggeser percakapan.</p></div>
-        <div className="mt-16 grid border-t border-[#f5f0e7]/30 md:grid-cols-3">{creators.map((creator, index) => <button key={creator.name} className="group border-b border-[#f5f0e7]/30 py-7 text-left transition-colors hover:bg-[#ff5600] hover:text-[#15120f] md:border-r md:px-6 md:first:pl-0 md:last:border-r-0" data-testid={`card-creator-${index}`}><div className="flex items-start justify-between"><span className="flex h-14 w-14 items-center justify-center rounded-full border border-current font-display text-xl">{creator.mark}</span><span className="font-mono-custom text-[10px] opacity-60">0{index + 1}</span></div><h3 className="mt-12 font-display text-3xl font-semibold">{creator.name}</h3><p className="mt-1 font-mono-custom text-[10px] uppercase tracking-[.1em] opacity-55">{creator.role}</p><p className="mt-7 max-w-[270px] text-lg leading-snug opacity-75">{creator.quote}</p><span className="mt-8 flex items-center gap-2 font-mono-custom text-[10px] uppercase tracking-[.12em] opacity-70">Baca profil <ArrowUpRight size={14} /></span></button>)}</div>
-      </div>
-    </section>
-
-    <section className="grid bg-[#15120f] text-[#f5f0e7] md:grid-cols-[1.1fr_.9fr]">
-      <div className="dot-grid min-h-[360px] border-b border-[#f5f0e7]/15 p-5 md:border-b-0 md:border-r md:p-10"><div className="flex h-full min-h-[320px] flex-col justify-between border border-[#ff5600] p-5 md:p-8"><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">05 / Surat dari jalan</span><p className="max-w-lg font-display text-[clamp(2.4rem,5vw,5.5rem)] font-semibold leading-[.88] tracking-[-.06em]">“Punya cerita yang harus dipajang?”</p><button onClick={() => scroll('#contact')} className="flex items-center gap-3 self-start border-b border-[#ff5600] pb-2 font-mono-custom text-[10px] uppercase tracking-[.15em] text-[#ff5600]" data-testid="button-send-story">Kirim ke meja redaksi <ArrowUpRight size={15} /></button></div></div>
-      <div className="image-reveal aspect-[1.3/1] overflow-hidden md:aspect-auto"><img src="/coastline.jpg" alt="Pemandangan pesisir saat fajar" className="h-full w-full object-cover opacity-90" /></div>
-    </section>
-
-    <section id="studio" className="bg-[#ff5600] px-5 py-20 text-[#15120f] md:px-10 md:py-28">
-      <div className="mx-auto max-w-[1440px]">
-        <div className="grid gap-12 md:grid-cols-[.8fr_1.2fr]"><div><span className="font-mono-custom text-[10px] uppercase tracking-[.2em]">06 / Majang Mejeng Studio</span><div className="mt-5 h-1 w-14 bg-[#15120f]" /></div><div><h2 className="max-w-4xl font-display text-[clamp(3rem,7vw,8rem)] font-semibold leading-[.84] tracking-[-.075em]">Bikin sesuatu yang ingin dilihat orang.</h2><p className="mt-9 max-w-lg text-lg leading-relaxed text-[#15120f]/70">Dari campaign yang punya denyut sampai format konten yang terasa seperti percakapan, kami bantu brand dan komunitas menemukan cara tampil yang jujur.</p></div></div>
-        <div className="mt-16 grid gap-0 border-y border-[#15120f] md:grid-cols-4">{['Editorial campaign', 'Social storytelling', 'Visual direction', 'Event & experience'].map((item, i) => <div key={item} className="group flex items-center justify-between border-b border-[#15120f] py-5 md:border-b-0 md:border-r md:px-5 md:first:pl-0 md:last:border-r-0"><span className="font-display text-xl font-semibold">{item}</span><span className="font-mono-custom text-[10px] opacity-50">0{i + 1}</span></div>)}</div>
-        <button onClick={() => scroll('#contact')} className="mt-10 flex items-center gap-3 bg-[#15120f] px-5 py-4 font-mono-custom text-[11px] uppercase tracking-[.14em] text-[#f5f0e7] transition-transform hover:-translate-y-1" data-testid="button-studio-contact">Bawa ide kamu ke sini <ArrowUpRight size={17} /></button>
-      </div>
-    </section>
-
-    <section className="bg-[#f5f0e7] px-5 py-20 md:px-10 md:py-28">
-      <div className="mx-auto max-w-[1440px]">
-        <div className="flex items-end justify-between border-b border-[#15120f] pb-5"><div><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">07 / Dari @majangmejeng_</span><h2 className="mt-4 font-display text-5xl font-semibold tracking-[-.06em] md:text-7xl">Temui kami di <span className="text-[#ff5600]">sana.</span></h2></div><a href="https://www.instagram.com/majangmejeng_/" target="_blank" rel="noreferrer" className="hidden items-center gap-2 font-mono-custom text-[10px] uppercase tracking-[.13em] hover:text-[#ff5600] sm:flex" data-testid="link-instagram-desktop">Instagram <ArrowUpRight size={15} /></a></div>
-        <div className="mt-7 grid grid-cols-2 gap-2 md:grid-cols-4">{['/editorial-portrait.jpg', '/studio-table.jpg', '/coastline.jpg', '/editorial-portrait.jpg'].map((src, i) => <a href="https://www.instagram.com/majangmejeng_/" target="_blank" rel="noreferrer" key={`${src}-${i}`} className={`image-reveal group relative overflow-hidden border border-[#15120f] ${i === 1 ? 'md:mt-12' : i === 3 ? 'md:-mt-10' : ''}`} data-testid={`link-instagram-tile-${i}`}><img src={src} alt="Cuplikan Instagram Majang Mejeng" className="aspect-square h-full w-full object-cover" /><span className="absolute bottom-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5600] text-[#15120f] opacity-0 transition-opacity group-hover:opacity-100"><Instagram size={15} /></span></a>)}</div>
-        <a href="https://www.instagram.com/majangmejeng_/" target="_blank" rel="noreferrer" className="mt-6 flex items-center gap-2 font-mono-custom text-[10px] uppercase tracking-[.13em] hover:text-[#ff5600] sm:hidden" data-testid="link-instagram-mobile"><Instagram size={15} /> @majangmejeng_ <ArrowUpRight size={15} /></a>
-      </div>
-    </section>
-
-    <section id="contact" className="bg-[#15120f] px-5 py-20 text-[#f5f0e7] md:px-10 md:py-32">
-      <div className="mx-auto grid max-w-[1440px] gap-14 md:grid-cols-[1.1fr_.9fr]">
-        <div><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">08 / Mari bicara</span><h2 className="mt-6 max-w-3xl font-display text-[clamp(3.4rem,8vw,8.5rem)] font-semibold leading-[.82] tracking-[-.08em]">Punya ide?<br /><span className="text-[#ff5600]">Pajang</span> di sini.</h2></div>
-        <div className="self-end"><p className="max-w-md text-lg leading-relaxed text-[#f5f0e7]/65">Kolaborasi, kirim cerita, atau sekadar say hi. Meja kami selalu punya satu kursi kosong.</p><form onSubmit={submitEmail} className="mt-10 flex border-b border-[#f5f0e7]/60 pb-3"><input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email kamu" className="min-w-0 flex-1 bg-transparent font-display text-xl outline-none placeholder:text-[#f5f0e7]/35" data-testid="input-contact-email" /><button type="submit" className="flex items-center gap-2 font-mono-custom text-[10px] uppercase tracking-[.14em] text-[#ff5600] hover:text-[#f5f0e7]" data-testid="button-contact-submit">{sent ? 'Terkirim' : 'Kirim'} <ArrowUpRight size={15} /></button></form><p className="mt-3 font-mono-custom text-[9px] uppercase tracking-[.1em] text-[#f5f0e7]/35">Kami akan membalas secepatnya · demo contact form</p></div>
-      </div>
-    </section>
-
-    <footer className="bg-[#15120f] px-5 pb-7 text-[#f5f0e7] md:px-10">
-      <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-8 border-t border-[#f5f0e7]/20 pt-7 md:flex-row md:items-end"><div><img src={logo} alt="Majang Mejeng" className="h-16 w-16 object-cover" /><p className="mt-4 max-w-[220px] font-mono-custom text-[9px] uppercase leading-relaxed tracking-[.12em] text-[#f5f0e7]/45">Media & creative platform<br />Jakarta · Indonesia</p></div><div className="flex flex-wrap gap-x-6 gap-y-3 font-mono-custom text-[10px] uppercase tracking-[.12em] text-[#f5f0e7]/55"><button onClick={() => scroll('#top')} className="hover:text-[#ff5600]" data-testid="button-footer-top">Kembali ke atas</button><a href="https://www.instagram.com/majangmejeng_/" target="_blank" rel="noreferrer" className="hover:text-[#ff5600]" data-testid="link-footer-instagram">Instagram</a><span>© {new Date().getFullYear()} Majang Mejeng</span></div></div>
-    </footer>
-
-    {activeStory && <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#15120f]/90 p-5" role="dialog" aria-modal="true"><div className="relative max-h-[90vh] w-full max-w-3xl overflow-auto bg-[#f5f0e7] text-[#15120f]"><button onClick={() => setActiveStory(null)} className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center bg-[#ff5600]" data-testid="button-close-story" aria-label="Tutup cerita"><X size={18} /></button><div className="grid md:grid-cols-2"><img src={activeStory.image} alt={activeStory.title} className="aspect-square h-full w-full object-cover" /><div className="p-7 md:p-10"><span className="font-mono-custom text-[10px] uppercase tracking-[.18em] text-[#ff5600]">{activeStory.category} / Cerita demo</span><h2 className="mt-5 font-display text-4xl font-semibold leading-[.92] tracking-[-.06em]">{activeStory.title}</h2><p className="mt-7 text-base leading-relaxed text-[#15120f]/65">{activeStory.dek}</p><div className="mt-10 border-t border-[#15120f] pt-4 font-mono-custom text-[10px] uppercase leading-relaxed tracking-[.1em] text-[#15120f]/55">Sample editorial content — ditampilkan untuk demo pengalaman Majang Mejeng.</div></div></div></div></div>}
-  </main>;
+      {menu && <div className="border-t border-white/10 bg-[#15120f] px-5 py-4 md:hidden">{nav.map(([label, href]) => <Link key={href} href={href} onClick={() => setMenu(false)} className="block border-b border-white/10 py-4 font-display text-2xl">{label}<ArrowUpRight className="float-right text-[#ff5600]"/></Link>)}<Link href="/work-with-us" onClick={() => setMenu(false)} className="mt-4 block bg-[#ff5600] px-4 py-3 font-mono-custom text-[10px] uppercase text-black">Mulai kolaborasi</Link></div>}
+    </header>
+    {children}<Footer/>{searchOpen && <SearchOverlay close={() => setSearchOpen(false)}/>}</div>;
 }
+function Footer() { return <footer className="bg-[#15120f] px-5 py-14 text-[#f5f0e7] md:px-10 md:py-20"><div className="mx-auto grid max-w-[1440px] gap-12 md:grid-cols-4"><div><div className="flex items-center gap-3"><img src={logo} className="h-12 w-12" alt="Majang Mejeng"/><span className="font-display text-2xl">Majang Mejeng</span></div><p className="mt-5 text-sm leading-relaxed text-white/50">Cerita, orang, tempat, budaya, dan momen yang layak dilihat lebih dekat.</p></div><div><p className="font-mono-custom text-[9px] uppercase text-[#ff5600]">Explore</p><div className="mt-5 grid gap-3 text-sm"><Link href="/stories">Stories</Link><Link href="/originals">Originals</Link><Link href="/creators">Creators</Link><Link href="/community">Community</Link></div></div><div><p className="font-mono-custom text-[9px] uppercase text-[#ff5600]">Social</p><div className="mt-5 grid gap-3 text-sm"><a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram</a><a href={TIKTOK} target="_blank" rel="noreferrer">TikTok</a><Link href="/work-with-us">Work with us</Link></div></div><div><p className="font-mono-custom text-[9px] uppercase text-[#ff5600]">Field note</p><p className="mt-5 text-sm text-white/50">Follow the stories. Come back for what is moving next.</p></div></div></footer>; }
+function SearchOverlay({ close }: { close: () => void }) { const [q, setQ] = useState(''); const found = stories.filter(s => `${s.title} ${s.category}`.toLowerCase().includes(q.toLowerCase())); return <div className="fixed inset-0 z-[100] bg-[#15120f]/98 px-5 pt-[15vh] text-[#f5f0e7]"><div className="mx-auto max-w-4xl"><button onClick={close} className="float-right" aria-label="Close search"><X/></button><p className="font-mono-custom text-[9px] uppercase tracking-widest text-[#ff5600]">Search / Majang Mejeng</p><div className="mt-6 flex gap-4 border-b border-white/30 pb-4"><Search className="text-[#ff5600]"/><input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Cari cerita, orang, kota..." className="w-full bg-transparent font-display text-4xl outline-none md:text-6xl"/></div><div className="mt-8">{q && found.map(s => <Link key={s.slug} href={`/stories/${s.slug}`} onClick={close} className="block border-b border-white/10 py-4 text-xl">{s.title}<span className="float-right font-mono-custom text-xs text-[#ff5600]">{s.category}</span></Link>)}</div></div></div>; }
+function SectionHead({ kicker, title, action, href }: { kicker: string; title: string; action?: string; href?: string }) { return <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p className="font-mono-custom text-[9px] uppercase tracking-widest text-[#ff5600]">{kicker}</p><h2 className="mt-4 max-w-4xl font-display text-5xl font-semibold leading-[.9] md:text-7xl">{title}</h2></div>{action && href && <Link href={href} className="font-mono-custom text-[9px] uppercase tracking-widest">{action} <ArrowUpRight className="inline" size={13}/></Link>}</div>; }
+function StoryCard({ story }: { story: Story }) { return <Link href={`/stories/${story.slug}`} onClick={() => track('story_open', { slug: story.slug })} className="story-link group block border border-black"><div className="image-reveal relative aspect-[4/3] overflow-hidden"><img src={story.image} alt={story.title} loading="lazy" className="h-full w-full object-cover"/><span className="absolute left-3 top-3 bg-[#ff5600] px-2 py-1 font-mono-custom text-[8px] uppercase">{story.category}</span><span className="absolute bottom-3 right-3 rounded-full bg-[#f5f0e7] p-3 text-black"><ArrowUpRight size={15}/></span></div><div className="p-5"><div className="font-mono-custom text-[8px] uppercase text-black/45">{story.platform} · {story.read}</div><h3 className="mt-3 font-display text-2xl font-semibold leading-none md:text-3xl">{story.title}</h3><p className="mt-3 text-sm leading-relaxed text-black/55">{story.dek}</p><span className="mt-6 inline-block font-mono-custom text-[9px] uppercase">Buka cerita <ArrowUpRight className="inline" size={13}/></span></div></Link>; }
+function Ticker() { return <div className="overflow-hidden border-b border-black py-3 font-mono-custom text-[9px] uppercase tracking-widest"><div className="marquee-track flex gap-12 whitespace-nowrap"><span>Majang Mejeng Media</span><span>Stories in motion</span><span>Indonesia</span><span>Follow the stories</span><span>Majang Mejeng Media</span><span>Stories in motion</span><span>Indonesia</span></div></div>; }
+function Home() { return <Shell><Meta title="Majang Mejeng — Yang menarik, kami pajang." description="Majang Mejeng Media: cerita, orang, tempat, budaya, dan momen."/><main>
+  <section className="hero-field relative overflow-hidden bg-[#090a09] px-5 pb-20 pt-20 text-[#f5f0e7] md:min-h-[820px] md:px-10 md:pt-28"><div className="hero-grid absolute inset-0 opacity-70"/><div className="hero-vignette absolute inset-0"/><div className="relative z-10 mx-auto max-w-[1440px]"><div className="mb-8 flex items-center gap-3 font-mono-custom text-[9px] uppercase tracking-widest text-white/50"><span className="h-1.5 w-1.5 rounded-full bg-[#ff5600] pulse-dot"/> Social-first media / Indonesia</div><div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center"><div><h1 className="hero-title font-display text-[clamp(4rem,10vw,10rem)] font-semibold leading-[.78] tracking-[-.06em]">Yang menarik,<br/><span className="text-[#ff5600]">kami pajang.</span></h1><p className="mt-10 max-w-xl text-base leading-relaxed text-white/55 md:text-lg">Cerita, orang, budaya, dan momen yang layak dilihat dua kali. Dari social ke ruang editorial yang lebih dalam.</p><div className="mt-8 flex flex-wrap gap-3"><Link href="/stories" onClick={() => track('cta_click', { cta: 'explore' })} className="rounded-full bg-[#f5f0e7] px-5 py-3 font-mono-custom text-[10px] uppercase text-[#15120f]">Explore stories <ArrowDownRight className="inline" size={14}/></Link><Link href="/work-with-us" className="rounded-full border border-white/25 px-5 py-3 font-mono-custom text-[10px] uppercase">Work with us</Link></div></div><div className="signal-globe-wrap reveal reveal-delay-2"><SignalGlobe/></div></div></div><div className="absolute bottom-7 left-5 right-5 z-20 flex justify-between border-t border-white/15 pt-3 font-mono-custom text-[8px] uppercase tracking-widest text-white/40 md:left-10 md:right-10"><span>01 / 08 — Selamat datang di meja kami</span><span className="hidden md:inline">Scroll untuk membuka peta cerita ↓</span></div></section>
+  <Ticker/>
+  <section className="px-5 py-16 md:px-10 md:py-24"><div className="mx-auto max-w-[1440px]"><SectionHead kicker="02 / What's moving" title="Yang lagi dimajang." action="Lihat semua" href="/stories"/><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{stories.map(s => <StoryCard key={s.slug} story={s}/>)}</div></div></section>
+  <section className="bg-[#ff5600] px-5 py-16 md:px-10 md:py-24"><div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[.7fr_1.3fr]"><div><p className="font-mono-custom text-[9px] uppercase">03 / Editorial</p><p className="mt-5 max-w-xs text-sm leading-relaxed">Di social kamu menemukan pintunya. Di sini kami membuka ruangnya lebih lebar.</p></div><Link href={`/stories/${stories[0].slug}`} className="group grid gap-6 md:grid-cols-2"><img src={stories[0].image} alt={stories[0].title} className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.02]"/><div><p className="font-mono-custom text-[9px] uppercase">{stories[0].category} · {stories[0].read}</p><h2 className="mt-5 font-display text-4xl font-semibold leading-none md:text-6xl">{stories[0].title}</h2><p className="mt-5 text-sm">{stories[0].dek}</p><span className="mt-8 inline-block font-mono-custom text-[9px] uppercase">Baca cerita <ArrowUpRight className="inline" size={13}/></span></div></Link></div></section>
+  <section className="px-5 py-16 md:px-10 md:py-24"><div className="mx-auto max-w-[1440px]"><SectionHead kicker="04 / Worlds" title="Kami majang banyak hal."/><div className="mt-10 grid grid-cols-2 border-t border-black md:grid-cols-3 lg:grid-cols-5">{['Stories','People','Culture','Lifestyle','Events','Food','Business','Creators','Community','Originals'].map((x,i) => <Link href="/stories" key={x} className="group border-b border-r border-black p-5 md:p-8"><span className="font-mono-custom text-[9px] text-[#ff5600]">{String(i+1).padStart(2,'0')}</span><h3 className="mt-5 font-display text-xl font-semibold">{x}</h3><ArrowUpRight className="mt-8 opacity-40" size={17}/></Link>)}</div></div></section>
+  <section className="bg-[#15120f] px-5 py-16 text-[#f5f0e7] md:px-10 md:py-24"><div className="mx-auto max-w-[1440px]"><SectionHead kicker="05 / Creators" title="Kenalan dengan orangnya." action="Lihat creators" href="/creators"/><div className="mt-10 grid border-t border-white/15 md:grid-cols-3">{creators.map(c => <Link href="/creators" key={c.name} className="border-b border-white/15 p-7 md:p-10"><div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ff5600] font-display text-xl text-black">{c.mark}</div><h3 className="mt-7 font-display text-3xl font-semibold">{c.name}</h3><p className="mt-2 text-sm text-white/45">{c.role}</p><ArrowUpRight className="mt-8 text-[#ff5600]"/></Link>)}</div></div></section>
+  <section className="px-5 py-16 md:px-10 md:py-24"><div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-2"><div><p className="font-mono-custom text-[9px] uppercase tracking-widest text-[#ff5600]">06 / Social loop</p><h2 className="mt-5 font-display text-5xl font-semibold leading-[.88] md:text-7xl">Lihat di social.<br/>Datang lebih dalam.</h2></div><div className="grid gap-4"><Social platform="Instagram" href={INSTAGRAM} copy="Visual, reels, dan potongan cerita yang sedang bergerak."/><Social platform="TikTok" href={TIKTOK} copy="Video cepat untuk menemukan cerita berikutnya."/></div></div></section>
+  <section className="bg-[#ff5600] px-5 py-20 md:px-10 md:py-28"><div className="mx-auto flex max-w-[1440px] flex-col gap-10 md:flex-row md:items-end md:justify-between"><div><p className="font-mono-custom text-[9px] uppercase">07 / Collaboration</p><h2 className="mt-5 max-w-4xl font-display text-5xl font-semibold leading-[.86] md:text-8xl">Punya sesuatu<br/>yang layak dimajang?</h2></div><Link href="/work-with-us" className="rounded-full bg-[#15120f] px-6 py-4 font-mono-custom text-[10px] uppercase text-white">Mulai ngobrol <ArrowUpRight className="inline" size={14}/></Link></div></section>
+</main></Shell>; }
+function SignalGlobe() { const nodes = [{x:25,y:25,label:'JKT'},{x:65,y:39,label:'BDG'},{x:39,y:62,label:'YGY'},{x:77,y:72,label:'MKS'}]; return <div className="relative mx-auto aspect-square w-full max-w-[560px]"><div className="absolute inset-[10%] rounded-full border border-white/15 bg-[radial-gradient(circle_at_35%_30%,rgba(255,122,56,.7),rgba(255,86,0,.12)_45%,transparent_70%)]"/><div className="absolute inset-[18%] rounded-full border border-dashed border-white/20"/><div className="absolute inset-[27%] rounded-full border border-white/10"/><svg className="absolute inset-[10%] h-[80%] w-[80%]" viewBox="0 0 100 100" fill="none"><path d="M5 35C28 20 39 72 55 42S79 28 96 41" stroke="#f5f0e7" strokeDasharray="2 3"/><path d="M9 75C30 61 43 25 61 50S78 79 94 65" stroke="#ff5600" strokeDasharray="2 3"/><path d="M25 25L65 39L39 62L77 72" stroke="#f5f0e7" strokeDasharray="1 3"/></svg>{nodes.map(n => <div key={n.label} className="absolute" style={{left:`${n.x}%`,top:`${n.y}%`}}><span className="block h-3 w-3 rounded-full bg-[#ff5600] shadow-[0_0_20px_#ff5600]"/><span className="ml-4 whitespace-nowrap font-mono-custom text-[9px] uppercase text-white/55">{n.label} / story</span></div>)}<div className="absolute bottom-[4%] left-[8%] right-[8%] flex justify-between font-mono-custom text-[8px] uppercase tracking-widest text-white/40"><span>Network / 04</span><span>Stories in motion</span></div></div>; }
+function Social({ platform, href, copy }: { platform: string; href: string; copy: string }) { return <a href={href} target="_blank" rel="noreferrer" onClick={() => track('social_click', { platform })} className="group border border-black p-7 hover:bg-[#15120f] hover:text-white"><div className="flex justify-between"><span className="font-mono-custom text-[9px] uppercase text-[#ff5600]">{platform}</span><ArrowUpRight/></div><h3 className="mt-10 font-display text-3xl font-semibold">@majangmejeng_</h3><p className="mt-3 text-sm opacity-55">{copy}</p></a>; }
 
+function Stories() { return <Shell><main className="px-5 py-14 md:px-10 md:py-20"><Meta title="Stories — Majang Mejeng" description="Cerita terbaru Majang Mejeng Media."/><div className="mx-auto max-w-[1440px]"><SectionHead kicker="Stories / Archive" title="Yang sedang bergerak."/><div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{stories.map(s => <StoryCard key={s.slug} story={s}/>)}</div></div></main></Shell>; }
+function StoryPage({ slug }: { slug: string }) { const s = stories.find(x => x.slug === slug) || stories[0]; useEffect(() => track('story_view', { slug: s.slug }), [s.slug]); return <Shell><main><Meta title={`${s.title} — Majang Mejeng`} description={s.dek}/><article className="mx-auto max-w-[1440px] px-5 py-14 md:px-10 md:py-20"><Link href="/stories" className="font-mono-custom text-[9px] uppercase">← Semua stories</Link><div className="mt-12 grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><p className="font-mono-custom text-[9px] uppercase text-[#ff5600]">{s.category} / {s.read}</p><h1 className="mt-5 font-display text-5xl font-semibold leading-[.86] md:text-8xl">{s.title}</h1><p className="mt-7 max-w-xl text-lg leading-relaxed text-black/55">{s.dek}</p></div><img src={s.image} alt={s.title} className="w-full object-cover"/></div><div className="mx-auto max-w-3xl py-20"><p className="font-display text-2xl leading-relaxed md:text-4xl">Majang Mejeng melihat cerita bukan sebagai potongan feed, tetapi sebagai pintu masuk untuk mengenal tempat, orang, dan konteks di belakangnya.</p><div className="my-12 h-px bg-black/15"/><div className="space-y-6 text-base leading-8 text-black/60"><p>Setiap cerita dimulai dari rasa ingin tahu: apa yang biasanya dilewati, siapa yang jarang didengar, dan momen apa yang layak disimpan sedikit lebih lama.</p><p>Di social, kamu menemukan pintunya. Di sini, kami membuka ruangnya lebih lebar.</p></div><Link href="/stories" className="mt-10 inline-block rounded-full bg-[#15120f] px-5 py-3 font-mono-custom text-[9px] uppercase text-white">Lanjut eksplorasi</Link></div></article></main></Shell>; }
+function Originals() { return <Shell><main className="px-5 py-14 md:px-10 md:py-20"><Meta title="Originals — Majang Mejeng" description="Series editorial Majang Mejeng."/><div className="mx-auto max-w-[1440px]"><SectionHead kicker="Originals" title="Series yang kami rawat."/><div className="mt-12 grid gap-5 md:grid-cols-2">{[['Orang Lokal','Bertemu orang-orang yang membuat tempatnya punya cerita.','/editorial-portrait.jpg'],['Cerita Kota','Membaca kota lewat ruang kecil, kebiasaan, dan suara warganya.','/coastline.jpg'],['Majangin','Karya, proses, dan benda kecil yang layak mendapat ruang.','/studio-table.jpg']].map(([t,d,i]) => <div key={t} className="overflow-hidden bg-[#15120f] text-white"><img src={i} alt={t} className="aspect-video w-full object-cover"/><div className="p-7"><p className="font-mono-custom text-[9px] uppercase text-[#ff5600]">Original series</p><h2 className="mt-4 font-display text-4xl font-semibold">{t}</h2><p className="mt-3 text-sm text-white/55">{d}</p></div></div>)}</div></div></main></Shell>; }
+function Creators() { return <Shell><main className="px-5 py-14 md:px-10 md:py-20"><Meta title="Creators — Majang Mejeng" description="Creator dan orang-orang di balik cerita."/><div className="mx-auto max-w-[1440px]"><SectionHead kicker="Creator directory" title="Kenalan dengan orangnya."/><div className="mt-12 grid border-t border-black md:grid-cols-3">{creators.map(c => <Link href="/work-with-us" key={c.name} className="border-b border-r border-black p-8 md:p-10"><div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#ff5600] font-display text-3xl">{c.mark}</div><h2 className="mt-8 font-display text-4xl font-semibold">{c.name}</h2><p className="mt-2 text-sm text-black/50">{c.role}</p><p className="mt-8 text-sm text-black/60">Portfolio, appearances, dan kesempatan kolaborasi.</p></Link>)}</div></div></main></Shell>; }
+function Community() { return <Shell><main><Meta title="Community — Majang Mejeng" description="Cerita dan inisiatif komunitas."/><section className="bg-[#15120f] px-5 py-20 text-white md:px-10 md:py-28"><div className="mx-auto max-w-[1440px]"><p className="font-mono-custom text-[9px] uppercase text-[#ff5600]">Community</p><h1 className="mt-6 max-w-5xl font-display text-6xl font-semibold leading-[.86] md:text-9xl">Yang bergerak<br/>bersama.</h1></div></section><section className="px-5 py-20 md:px-10"><div className="mx-auto max-w-3xl"><p className="font-display text-3xl leading-tight md:text-5xl">Komunitas bukan sekadar audience. Mereka adalah orang-orang yang membuat cerita terus punya tempat untuk tumbuh.</p><p className="mt-8 text-base leading-8 text-black/60">Kami membuka ruang untuk komunitas lokal, inisiatif warga, event, dan kolaborasi yang punya nilai nyata.</p></div></section></main></Shell>; }
+function Work() { const [done,setDone] = useState(false); const submit=(e:FormEvent)=>{e.preventDefault();setDone(true);track('form_submit',{form:'collaboration'});}; return <Shell><main className="px-5 py-14 md:px-10 md:py-20"><Meta title="Work With Us — Majang Mejeng" description="Campaign, content production, creator campaign, event, dan media partnership."/><div className="mx-auto max-w-[1200px]"><p className="font-mono-custom text-[9px] uppercase text-[#ff5600]">Work with us</p><h1 className="mt-6 max-w-5xl font-display text-6xl font-semibold leading-[.86] md:text-9xl">Punya sesuatu<br/>yang layak dimajang?</h1><p className="mt-8 max-w-xl text-lg text-black/55">Campaign, content production, event coverage, creator campaign, atau media partnership.</p>{done?<div className="mt-12 bg-[#ff5600] p-8"><Check/><h2 className="mt-5 font-display text-4xl font-semibold">Brief sudah masuk.</h2></div>:<form onSubmit={submit} className="mt-12 grid gap-6 border-t border-black pt-8 md:grid-cols-2"><input required className="border-b border-black bg-transparent py-3 outline-none" placeholder="Nama"/><input required type="email" className="border-b border-black bg-transparent py-3 outline-none" placeholder="Email"/><select className="border-b border-black bg-transparent py-3"><option>Brand campaign</option><option>Content production</option><option>Event coverage</option><option>Creator campaign</option><option>Media partnership</option></select><input className="border-b border-black bg-transparent py-3 outline-none" placeholder="Timeline"/><textarea required className="md:col-span-2 border border-black bg-transparent p-4 outline-none" rows={6} placeholder="Ceritakan project kamu"/><button className="w-fit rounded-full bg-[#15120f] px-6 py-4 font-mono-custom text-[10px] uppercase text-white">Kirim brief <ArrowUpRight className="inline" size={13}/></button></form>}</div></main></Shell>; }
+function SocialEntry({ platform, slug }: { platform: string; slug?: string }) { const s=stories.find(x=>x.slug===slug)||stories[0]; useEffect(()=>track('social_entry',{platform,slug:s.slug}),[platform,slug,s.slug]); return <div className="min-h-screen bg-[#15120f] px-5 py-6 text-white"><Meta title={`${platform} → ${s.title}`} description={s.dek}/><div className="mx-auto max-w-md"><div className="flex items-center gap-3"><img src={logo} className="h-10 w-10" alt="Majang Mejeng"/><span className="font-mono-custom text-[9px] uppercase tracking-widest">From {platform}</span></div><img src={s.image} alt={s.title} className="mt-10 aspect-[4/5] w-full object-cover"/><p className="mt-6 font-mono-custom text-[9px] uppercase text-[#ff5600]">{s.category} · {s.read}</p><h1 className="mt-4 font-display text-4xl font-semibold leading-[.9]">{s.title}</h1><p className="mt-4 text-sm text-white/55">{s.dek}</p><Link href={`/stories/${s.slug}`} className="mt-7 block bg-[#ff5600] px-5 py-4 text-center font-mono-custom text-[10px] uppercase text-black">Lanjutkan cerita <ArrowUpRight className="inline" size={13}/></Link><div className="mt-8 grid grid-cols-2 gap-3"><a href={INSTAGRAM} target="_blank" rel="noreferrer" className="border border-white/20 p-3 text-center font-mono-custom text-[8px] uppercase">Instagram</a><a href={TIKTOK} target="_blank" rel="noreferrer" className="border border-white/20 p-3 text-center font-mono-custom text-[8px] uppercase">TikTok</a></div></div></div>; }
+
+function App() { return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><ErrorBoundary><Switch><Route path="/" component={Home}/><Route path="/stories" component={Stories}/><Route path="/stories/:slug">{p=><StoryPage slug={p.slug}/>}</Route><Route path="/originals" component={Originals}/><Route path="/creators" component={Creators}/><Route path="/community" component={Community}/><Route path="/work-with-us" component={Work}/><Route path="/go/:platform/:slug">{p=><SocialEntry platform={p.platform} slug={p.slug}/>}</Route><Route path="/go/:platform">{p=><SocialEntry platform={p.platform}/>}</Route><Route component={NotFound}/></Switch></ErrorBoundary></WouterRouter><Toaster/></TooltipProvider></QueryClientProvider>; }
 export default App;
