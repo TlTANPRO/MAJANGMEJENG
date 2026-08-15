@@ -1,27 +1,24 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('V8 responsive behavior', () => {
+test.describe('V9 responsive behavior', () => {
   test('mobile navigation opens and remains usable', async ({ page, isMobile }) => {
-    test.skip(!isMobile, 'Mobile navigation is intentionally hidden at desktop breakpoints.');
+    test.skip(!isMobile, 'Mobile-only navigation.');
     await page.goto('./');
-    const menu = page.getByRole('button', { name: 'Menu' });
+    const menu = page.getByRole('button', { name: 'Open menu' });
     await expect(menu).toBeVisible();
     await menu.click();
-    const mobileMenu = page.locator('.v8-overlay');
-    const storiesLink = mobileMenu.getByRole('link', { name: /Stories/i }).first();
-    await expect(storiesLink).toBeVisible();
-    await storiesLink.click();
-    await expect(page).toHaveURL(/\/MAJANGMEJENG\/stories\/?$/);
-    await expect(page.locator('main')).toBeVisible();
+    const overlay = page.locator('.v9-overlay');
+    await expect(overlay).toBeVisible();
+    await expect(overlay.getByRole('button', { name: /stories/i })).toBeVisible();
+    await page.getByRole('button', { name: 'Close menu' }).click();
+    await expect(overlay).toBeHidden();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
   });
 
-  test('story archive remains usable after scrolling', async ({ page }) => {
-    await page.goto('./stories');
-    await expect(page.locator('main')).toBeVisible();
-    await expect(page.getByRole('heading', { name: /Stories/i }).first()).toBeVisible();
-    await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }));
-    await expect(page.getByRole('link', { name: /Di balik riuhnya pasar/i })).toBeVisible();
+  test('editorial sections remain visible after deep scroll', async ({ page }) => {
+    await page.goto('./');
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(page.getByText('04 / COLLABORATE')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
   });
 });
