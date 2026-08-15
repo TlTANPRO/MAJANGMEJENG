@@ -1,4 +1,4 @@
-name: Majang Mejeng E2E
+name: Majang Mejeng V5 E2E
 
 on:
   push:
@@ -27,14 +27,14 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Install Playwright browser
+      - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
-      - name: Run V4 browser tests
+      - name: Run V5 browser journeys
         run: pnpm exec playwright test tests/e2e
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: majang-mejeng-playwright-report
+          name: majang-mejeng-v5-playwright-report
           path: artifacts/majang-mejeng/playwright-report
           if-no-files-found: ignore
