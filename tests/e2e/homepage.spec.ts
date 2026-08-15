@@ -5,10 +5,12 @@ test.describe('V11 homepage', () => {
     await page.goto('./');
     await expect(page).toHaveTitle(/Majang Mejeng/i);
     await expect(page.getByRole('heading', { level: 1, name: /LOOK.*CLOSER/i })).toBeVisible();
-    for (const id of ['signal','proposition','index','proof','people','places','culture','creators','current','stories','community','collaborate']) {
+    for (const id of ['signal','proposition','index','proof','people','places','culture','creators','current','geo','stories','community','collaborate']) {
       await expect(page.locator(`#${id}`)).toBeAttached();
     }
     await expect(page.getByRole('button', { name: /ENTER THE CURRENT/i })).toBeVisible();
+    await page.locator('#geo').scrollIntoViewIfNeeded();
+    await expect(page.getByText('INDONESIA', { exact: false }).first()).toBeVisible();
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await expect(page.getByText('HAVE SOMETHING', { exact: false })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
