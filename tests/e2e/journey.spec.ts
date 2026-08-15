@@ -1,18 +1,18 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('V9 user journeys', () => {
-  test('editorial story journey works', async ({ page }) => {
+test.describe('V10 user journeys', () => {
+  test('immersive journey and story controls work', async ({ page }) => {
     await page.goto('./');
-    await page.getByRole('button', { name: /Explore stories/i }).click();
-    await expect(page).toHaveURL(/#stories$/);
-    await expect(page.getByText('01 / STORIES')).toBeVisible();
-    await page.getByRole('button', { name: 'Story 3' }).click();
-    await expect(page.locator('.v9-story-copy')).toContainText('CULTURE');
+    await page.getByRole('button', { name: /Enter the world/i }).click();
+    await expect(page).toHaveURL(/#world$/);
+    await expect(page.getByText('ENTER THE WORLD', { exact: true })).toBeVisible();
+    await page.getByRole('button', { name: '02' }).last().click();
+    await expect(page.locator('.v10-feature h3')).toContainText('places');
   });
 
-  test('social current exposes official channels', async ({ page }) => {
+  test('official social channels are reachable', async ({ page }) => {
     await page.goto('./');
-    await expect(page.getByText('03 / SOCIAL CURRENT')).toBeVisible();
+    await page.locator('#current').scrollIntoViewIfNeeded();
     const instagram = page.locator('a[href="https://www.instagram.com/majangmejeng_/"]').first();
     const tiktok = page.locator('a[href*="tiktok.com/@majangmejeng_"]').first();
     await expect(instagram).toBeVisible();
@@ -22,9 +22,10 @@ test.describe('V9 user journeys', () => {
   test('mobile menu navigates without route assumptions', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Mobile-only journey.');
     await page.goto('./');
-    await page.getByRole('button', { name: 'Open menu' }).click();
-    await expect(page.locator('.v9-overlay')).toBeVisible();
-    await page.locator('.v9-overlay').getByRole('button', { name: /stories/i }).click();
-    await expect(page.getByText('01 / STORIES')).toBeVisible();
+    await page.getByRole('button', { name: 'Open navigation' }).click();
+    const panel = page.locator('.v10-menu-panel');
+    await expect(panel).toBeVisible();
+    await panel.getByRole('button', { name: /PEOPLE MAKE THE PLACE/i }).click();
+    await expect(page.locator('#people')).toBeVisible();
   });
 });
