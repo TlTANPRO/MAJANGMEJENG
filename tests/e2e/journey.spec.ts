@@ -4,13 +4,14 @@ test.describe('V6 user journeys', () => {
   test('story journey and search work', async ({ page }) => {
     await page.goto('./');
     await page.getByRole('button', { name: 'Search' }).click();
-    const searchDialog = page.getByRole('dialog', { name: '' }).first();
-    await expect(searchDialog).toBeVisible();
-    const input = searchDialog.getByPlaceholder(/Cari cerita/i);
+    const searchPanel = page.locator('.search-overlay').filter({ visible: true }).first();
+    await expect(searchPanel).toBeVisible();
+    const input = searchPanel.getByPlaceholder(/Cari cerita/i);
+    await expect(input).toBeVisible();
     await input.fill('riuhnya');
-    const result = searchDialog.locator('a[href*="/stories/"]').filter({ hasText: /Di balik riuhnya pasar, ada kota yang sedang belajar mendengar/i }).first();
+    const result = searchPanel.locator('a[href*="/stories/"]').filter({ hasText: /Di balik riuhnya pasar, ada kota yang sedang belajar mendengar/i }).first();
     await expect(result).toBeVisible();
-    await result.click({ force: true });
+    await result.click();
     await expect(page).toHaveURL(/\/MAJANGMEJENG\/stories\//);
     await expect(page.getByRole('article')).toBeVisible();
     await expect(page.getByRole('button', { name: /Share/i })).toBeVisible();
