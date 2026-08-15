@@ -1,8 +1,8 @@
-name: Majang Mejeng V10 E2E
+name: Majang Mejeng V11 E2E
 
 on:
   push:
-    branches: [main, v10-immersive-rebuild]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -33,12 +33,12 @@ jobs:
         run: PORT=4173 BASE_PATH=/MAJANGMEJENG/ NODE_ENV=production pnpm --dir artifacts/majang-mejeng run build
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
-      - name: Run V10 browser journeys
+      - name: Run V11 browser journeys
         run: pnpm exec playwright test tests/e2e
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: majang-mejeng-v10-playwright-report
+          name: majang-mejeng-v11-playwright-report
           path: artifacts/majang-mejeng/playwright-report
           if-no-files-found: ignore
