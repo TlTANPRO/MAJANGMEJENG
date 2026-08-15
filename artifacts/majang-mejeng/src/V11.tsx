@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowDown, ArrowRight, ArrowUpRight, Menu, X, Search, Plus } from 'lucide-react';
 
 const base='/MAJANGMEJENG/';
+const whatsapp='https://wa.me/6282225666497?text=Halo%20Majang%20Mejeng%2C%20saya%20ingin%20memulai%20percakapan.';
 const nav=[['index','INDEX'],['people','PEOPLE'],['places','PLACES'],['culture','CULTURE'],['creators','CREATORS'],['current','CURRENT'],['geo','FIELD MAP'],['stories','STORIES'],['collaborate','COLLABORATE']];
 const images={people:`${base}editorial-portrait.jpg`,places:`${base}coastline.jpg`,culture:`${base}studio-table.jpg`,creators:`${base}editorial-portrait.jpg`};
 const social={instagram:'https://www.instagram.com/majangmejeng_/',tiktok:'https://www.tiktok.com/@majangmejeng_?lang=id-ID'};
@@ -10,16 +11,9 @@ const stories=[
  {title:'Places that reward a slower look.',type:'PLACES',text:'Field notes from streets, corners and landscapes that deserve another look.',image:images.places},
  {title:'Culture in motion.',type:'CULTURE',text:'Food, rituals, visual language, music and scenes changing beneath the surface.',image:images.culture},
 ];
-const fieldNotes=[['n1','JAKARTA'],['n2','BANDUNG'],['n3','YOGYAKARTA'],['n4','SURABAYA'],['n5','LUMAJANG'],['n6','BALI']];
-
-function jump(id:string){
- const el=document.getElementById(id); if(!el)return;
- el.scrollIntoView({behavior:'auto',block:'start'});
- if(location.hash) history.replaceState(null,'',location.pathname+location.search);
-}
-
+function jump(id:string){const el=document.getElementById(id);if(!el)return;el.scrollIntoView({behavior:'auto',block:'start'});if(location.hash)history.replaceState(null,'',location.pathname+location.search)}
 export default function V11(){
- const [menu,setMenu]=useState(false); const [searchOpen,setSearchOpen]=useState(false); const [query,setQuery]=useState(''); const [story,setStory]=useState<number|null>(null); const [saved,setSaved]=useState<number[]>([]);
+ const [menu,setMenu]=useState(false),[searchOpen,setSearchOpen]=useState(false),[query,setQuery]=useState(''),[story,setStory]=useState<number|null>(null),[saved,setSaved]=useState<number[]>([]);
  const filtered=stories.filter(s=>(s.title+' '+s.type+' '+s.text).toLowerCase().includes(query.toLowerCase()));
  const toggleSave=(i:number)=>setSaved(v=>v.includes(i)?v.filter(x=>x!==i):[...v,i]);
  return <div className="v11">
@@ -40,7 +34,7 @@ export default function V11(){
    <section id="geo" className="scene geo"><div className="geo-copy"><small>07 / FIELD MAP</small><h2>INDONESIA<br/><em>IN MOTION.</em></h2><p>Majang Mejeng is local by design. Use the field map as a discovery layer: places become entry points into people, culture, creators and stories.</p><button onClick={()=>jump('stories')}>CONTINUE TO STORIES <ArrowRight/></button></div><div className="constellation" aria-label="Editorial field map"><span className="node n1"><span>JAKARTA</span></span><span className="node n2"><span>BANDUNG</span></span><span className="node n3"><span>YOGYAKARTA</span></span><span className="node n4"><span>SURABAYA</span></span><span className="node n5"><span>LUMAJANG</span></span><span className="node n6"><span>BALI</span></span></div></section>
    <section id="stories" className="scene stories light"><div><small>08 / FEATURED STORIES</small><h2>STAY FOR<br/><em>THE STORY.</em></h2></div><div className="story-list">{stories.map((s,i)=><button key={s.title} onClick={()=>setStory(i)}><i>0{i+1}</i><strong>{s.title}</strong><span>{s.type} / FIELD NOTE {saved.includes(i)?'· SAVED':''}</span><ArrowRight/></button>)}</div></section>
    <section id="community" className="scene community"><div className="community-copy"><small>09 / COMMUNITY</small><h2>THE WORLD<br/><em>GETS BIGGER</em><br/>WHEN PEOPLE<br/>CONNECT.</h2></div><div className="community-grid"><button>CREATORS</button><button>COMMUNITIES</button><button>LOCAL BRANDS</button><button>EVENTS</button><button>IDEAS</button><button>COLLABORATIONS</button></div></section>
-   <section id="collaborate" className="scene collaborate"><div className="end-mark">MM</div><div><small>10 / COLLABORATE</small><h2>HAVE SOMETHING<br/><em>WORTH SHOWING?</em></h2><p>Send a story, person, place, event or collaboration. If it deserves a closer look, let's talk.</p><a href="mailto:majangmejeng@gmail.com">START A CONVERSATION <ArrowRight/></a></div><button onClick={()=>jump('signal')}>BACK TO THE BEGINNING ↑</button></section>
+   <section id="collaborate" className="scene collaborate"><div className="end-mark">MM</div><div><small>10 / COLLABORATE</small><h2>HAVE SOMETHING<br/><em>WORTH SHOWING?</em></h2><p>Send a story, person, place, event or collaboration. If it deserves a closer look, let's talk.</p><a href={whatsapp}>START A CONVERSATION <ArrowRight/></a></div><button onClick={()=>jump('signal')}>BACK TO THE BEGINNING ↑</button></section>
   </main>
   <footer className="v11-footer"><b>MM</b><span>© 2026 MAJANG MEJENG</span><span>PEOPLE / PLACES / CULTURE / CREATORS</span><a href={social.instagram} target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href={social.tiktok} target="_blank" rel="noreferrer">TIKTOK ↗</a></footer>
  </div>
