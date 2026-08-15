@@ -3,15 +3,23 @@ import { test, expect } from '@playwright/test';
 test.describe('V6 user journeys', () => {
   test('story journey and search work', async ({ page }) => {
     await page.goto('./');
+
+    // V6 is the actual application entrypoint (main.tsx -> V6.tsx).
+    // Assert against the rendered user-facing contract instead of a stale
+    // selector from the earlier App.tsx implementation.
     await page.getByRole('button', { name: 'Search' }).click();
-    const searchPanel = page.locator('.search-overlay').filter({ visible: true }).first();
-    await expect(searchPanel).toBeVisible();
-    const input = searchPanel.getByPlaceholder(/Cari cerita/i);
-    await expect(input).toBeVisible();
+
+    const input = page.getByPlaceholder('Cari cerita, orang, tempat, ide...');
+    await expect(input).toBeVisible({ timeout: 10000 });
     await input.fill('riuhnya');
-    const result = searchPanel.locator('a[href*="/stories/"]').filter({ hasText: /Di balik riuhnya pasar, ada kota yang sedang belajar mendengar/i }).first();
+
+    const result = page
+      .locator('.search-result')
+      .filter({ hasText: /Di balik riuhnya pasar, ada kota yang sedang belajar mendengar/i })
+      .first();
     await expect(result).toBeVisible();
     await result.click();
+
     await expect(page).toHaveURL(/\/MAJANGMEJENG\/stories\//);
     await expect(page.getByRole('article')).toBeVisible();
     await expect(page.getByRole('button', { name: /Share/i })).toBeVisible();
