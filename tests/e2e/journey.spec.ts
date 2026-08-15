@@ -4,9 +4,9 @@ test.describe('V4 user journeys', () => {
   test('story journey and search work', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Search' }).click();
-    await page.getByPlaceholder(/Cari cerita/i).fill('pasar');
-    await expect(page.getByText(/pasar santa/i)).toBeVisible();
-    await page.getByText(/pasar santa/i).click();
+    await page.getByPlaceholder(/Cari cerita/i).fill('riuhnya');
+    await expect(page.getByText(/Di balik riuhnya pasar/i)).toBeVisible();
+    await page.getByText(/Di balik riuhnya pasar/i).click();
     await expect(page).toHaveURL(/\/stories\//);
     await expect(page.getByRole('article')).toBeVisible();
   });
