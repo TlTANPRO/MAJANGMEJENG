@@ -12,9 +12,9 @@ const worlds=['PEOPLE','PLACES','CULTURE','FOOD','CREATORS','IDEAS'];
 
 export default function V9(){
  const [menu,setMenu]=useState(false); const [active,setActive]=useState(0); const [progress,setProgress]=useState(0);
- useEffect(()=>{const f=()=>{const h=document.documentElement;setProgress(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)};addEventListener('scroll',f,{passive:true});f();return()=>removeEventListener('scroll',f)},[]);
+ useEffect(()=>{const f=()=>{const h=document.documentElement;setProgress(h.scrollHeight===h.clientHeight?0:h.scrollTop/(h.scrollHeight-h.clientHeight)*100)};addEventListener('scroll',f,{passive:true});f();return()=>removeEventListener('scroll',f)},[]);
  const story=useMemo(()=>stories[active], [active]);
- const jump=(id:string)=>{setMenu(false);document.getElementById(id)?.scrollIntoView({behavior:'smooth'})};
+ const jump=(id:string)=>{setMenu(false);history.replaceState(null,'',`#${id}`);document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'})};
  return <div className="v9">
   <div className="v9-progress"><span style={{height:`${progress}%`}}/></div>
   <header className="v9-nav"><button className="v9-brand" onClick={()=>jump('top')} aria-label="Majang Mejeng home"><b>MM</b><span>MAJANG<br/>MEJENG</span></button><nav>{['stories','worlds','social','collaborate'].map(x=><button key={x} onClick={()=>jump(x)}>{x}</button>)}</nav><button className="v9-menu" onClick={()=>setMenu(true)} aria-label="Open menu"><Menu size={20}/></button></header>
