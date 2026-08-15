@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('V11 responsive behavior', () => {
+test.describe('V12 responsive behavior', () => {
   test('mobile navigation opens and remains usable', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Mobile-only navigation.');
     await page.goto('./');
     const menu = page.getByRole('button', { name: 'MENU' });
     await expect(menu).toBeVisible();
     await menu.click();
-    const drawer = page.locator('.drawer');
+    const drawer = page.locator('.v12-drawer');
     await expect(drawer.getByText('NAVIGATION / 001')).toBeVisible();
     const people = drawer.getByRole('button', { name: /PEOPLE/i });
     await expect(people).toBeVisible();
