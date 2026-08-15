@@ -4,6 +4,7 @@ import {
   ArrowDownRight,
   ArrowUpRight,
   Instagram,
+  MapPin,
   Menu,
   Search,
   X,
@@ -77,18 +78,24 @@ function Header({ onSearch }: { onSearch: () => void }) {
   };
   return (
     <header className="absolute left-0 right-0 top-0 z-40 text-[#f5f0e7]">
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 md:px-10 md:py-7">
-        <button onClick={() => go('#top')} className="flex items-center" data-testid="button-brand-home" aria-label="Kembali ke atas">
-          <img src={logo} alt="Majang Mejeng" className="h-[54px] w-[54px] object-cover md:h-[68px] md:w-[68px]" />
-          <span className="sr-only">Majang Mejeng</span>
+      <div className="border-b border-[#f5f0e7]/15 bg-[#ff5600] px-5 py-2 text-[#15120f] md:px-10">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 font-mono-custom text-[9px] uppercase tracking-[.14em]">
+          <span className="flex items-center gap-2"><span className="pulse-dot h-1.5 w-1.5 rounded-full bg-[#15120f]" /> Field note 001 / Majang Mejeng is live</span>
+          <span className="hidden sm:inline">Jakarta · Indonesia · 06°12′S 106°49′E</span>
+        </div>
+      </div>
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between border-b border-[#f5f0e7]/15 px-5 py-5 md:px-10 md:py-6">
+        <button onClick={() => go('#top')} className="flex items-center gap-3" data-testid="button-brand-home" aria-label="Kembali ke atas">
+          <img src={logo} alt="Majang Mejeng" className="h-[50px] w-[50px] object-cover md:h-[58px] md:w-[58px]" />
+          <span className="hidden text-left font-mono-custom text-[9px] uppercase leading-[1.35] tracking-[.16em] text-[#f5f0e7]/65 lg:block">Majang<br />Mejeng<br />Media</span>
         </button>
-        <nav className="hidden items-center gap-8 md:flex">
-          {nav.map(([label, href]) => <button key={href} onClick={() => go(href)} className="font-mono-custom text-[11px] uppercase tracking-[.16em] text-[#ded6ca] transition-colors hover:text-[#ff5600]" data-testid={`link-nav-${label.toLowerCase()}`}>{label}</button>)}
+        <nav className="hidden items-center gap-7 md:flex">
+          {nav.map(([label, href], index) => <button key={href} onClick={() => go(href)} className="flex items-center gap-2 font-mono-custom text-[10px] uppercase tracking-[.16em] text-[#ded6ca] transition-colors hover:text-[#ff5600]" data-testid={`link-nav-${label.toLowerCase()}`}><span className="text-[#ff5600]">0{index + 1}</span>{label}</button>)}
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button onClick={onSearch} className="flex items-center gap-2 font-mono-custom text-[11px] uppercase tracking-[.16em] text-[#ded6ca] transition-colors hover:text-[#ff5600]" data-testid="button-open-search"><Search size={16} strokeWidth={1.5} /><span className="hidden sm:inline">Cari</span></button>
           <button onClick={() => setOpen(!open)} className="border border-[#f5f0e7]/50 p-2 md:hidden" data-testid="button-mobile-menu" aria-label="Buka menu"><Menu size={19} /></button>
-          <button onClick={() => go('#contact')} className="hidden border border-[#ff5600] px-4 py-2 font-mono-custom text-[10px] uppercase tracking-[.16em] text-[#ff5600] transition-colors hover:bg-[#ff5600] hover:text-[#15120f] sm:block" data-testid="button-header-collaborate">Kolaborasi</button>
+          <button onClick={() => go('#contact')} className="hidden rounded-full border border-[#ff5600] px-5 py-2.5 font-mono-custom text-[10px] uppercase tracking-[.16em] text-[#ff5600] transition-colors hover:bg-[#ff5600] hover:text-[#15120f] sm:block" data-testid="button-header-collaborate">Mulai ngobrol <ArrowUpRight className="ml-1 inline" size={14} /></button>
         </div>
       </div>
       {open && <div className="border-t border-[#f5f0e7]/20 bg-[#15120f] px-5 py-5 md:hidden">
@@ -98,6 +105,45 @@ function Header({ onSearch }: { onSearch: () => void }) {
         </nav>
       </div>}
     </header>
+  );
+}
+
+function SignalGlobe() {
+  const nodes = [
+    { x: 122, y: 112, label: 'JKT / 01', className: 'node-jkt' },
+    { x: 262, y: 170, label: 'BDG / 02', className: 'node-bdg' },
+    { x: 158, y: 270, label: 'YGY / 03', className: 'node-ygy' },
+    { x: 330, y: 305, label: 'MKS / 04', className: 'node-mks' },
+  ];
+  return (
+    <div className="signal-globe-wrap" aria-label="Jaringan cerita Majang Mejeng di Indonesia">
+      <div className="globe-meta globe-meta-top"><span>Network / 04</span><span>Live index</span></div>
+      <svg className="signal-globe" viewBox="0 0 440 440" role="img" aria-hidden="true">
+        <defs>
+          <radialGradient id="globe-fill" cx="38%" cy="32%">
+            <stop offset="0%" stopColor="#ff7a38" stopOpacity=".8" />
+            <stop offset="44%" stopColor="#ff5600" stopOpacity=".34" />
+            <stop offset="100%" stopColor="#ff5600" stopOpacity=".03" />
+          </radialGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+        </defs>
+        <circle cx="220" cy="220" r="180" fill="url(#globe-fill)" className="globe-surface" />
+        <circle cx="220" cy="220" r="180" className="globe-outline" />
+        <ellipse cx="220" cy="220" rx="75" ry="180" className="globe-latitude" />
+        <ellipse cx="220" cy="220" rx="135" ry="180" className="globe-latitude" />
+        <ellipse cx="220" cy="220" rx="180" ry="72" className="globe-longitude" />
+        <ellipse cx="220" cy="220" rx="180" ry="132" className="globe-longitude" />
+        <path d="M55 171 C135 112 166 288 248 194 S351 137 405 181" className="globe-route" />
+        <path d="M78 299 C153 250 195 127 272 217 S348 314 388 276" className="globe-route globe-route-muted" />
+        <path d="M121 111 L263 170 L158 270 L330 305" className="globe-route" />
+        {nodes.map((node) => <g key={node.label} className={`globe-node ${node.className}`}><circle cx={node.x} cy={node.y} r="7" filter="url(#glow)" /><circle cx={node.x} cy={node.y} r="2.5" fill="#f5f0e7" /></g>)}
+        <circle cx="220" cy="220" r="190" className="globe-orbit" />
+      </svg>
+      <div className="globe-node-labels">
+        {nodes.map((node) => <span key={node.label} className={`globe-node-label ${node.className}`} style={{ left: `${(node.x / 440) * 100}%`, top: `${(node.y / 440) * 100}%` }}>{node.label}</span>)}
+      </div>
+      <div className="globe-meta globe-meta-bottom"><span>Stories in motion</span><span>+ 17 field notes</span></div>
+    </div>
   );
 }
 
@@ -148,31 +194,37 @@ function Home() {
     <Header onSearch={() => setSearchOpen(true)} />
     {searchOpen && <SearchPanel query={query} setQuery={setQuery} onClose={() => { setSearchOpen(false); setQuery(''); }} />}
 
-    <section className="relative min-h-[720px] overflow-hidden bg-[#15120f] text-[#f5f0e7] md:min-h-[860px]">
-      <div className="absolute right-[-12vw] top-[20%] h-[58vw] w-[58vw] max-h-[780px] max-w-[780px] rounded-full bg-[#ff5600] md:right-[-8vw] md:top-[13%]" />
-      <div className="absolute bottom-0 left-0 right-0 z-10 h-24 bg-gradient-to-t from-[#15120f] to-transparent" />
-      <div className="relative z-20 mx-auto grid max-w-[1440px] gap-8 px-5 pb-16 pt-40 md:grid-cols-[1.1fr_.9fr] md:px-10 md:pb-24 md:pt-52">
-        <div className="reveal max-w-[760px]">
-          <div className="mb-7 flex items-center gap-3 font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]"><span className="orange-rule" /> Media & creative platform / Indonesia</div>
-          <h1 className="font-display text-[clamp(4rem,11vw,10.5rem)] font-semibold leading-[.82] tracking-[-.075em]">Yang<br /><em className="not-italic text-[#ff5600]">menarik,</em><br />kami pajang.</h1>
-          <p className="mt-9 max-w-md text-base leading-relaxed text-[#f5f0e7]/70 md:ml-2 md:text-lg">Cerita, orang, budaya, dan momen yang layak dilihat dua kali. Dari sini, untuk siapa saja yang penasaran.</p>
-        </div>
-        <div className="relative mt-4 flex items-end justify-end md:mt-20">
-          <div className="reveal reveal-delay-2 relative w-[82%] max-w-[420px]">
-            <div className="image-reveal aspect-[4/5] overflow-hidden border-2 border-[#15120f] bg-[#dfd2bc]">
-              <img src="/editorial-portrait.jpg" alt="Potret editorial Majang Mejeng" className="h-full w-full object-cover" />
-            </div>
-            <div className="absolute -bottom-5 -left-8 flex h-20 w-20 items-center justify-center rounded-full border border-[#15120f] bg-[#f5f0e7] text-center font-mono-custom text-[9px] uppercase leading-tight text-[#15120f] md:-left-12 md:h-28 md:w-28">Scroll<br />pelan-pelan<br /><ArrowDownRight size={17} className="mx-auto mt-1" /></div>
-            <p className="absolute -right-5 top-4 font-mono-custom text-[9px] uppercase tracking-[.14em] text-[#15120f] [writing-mode:vertical-rl]">Vol. 01 — Jakarta & sekitarnya</p>
+    <section className="hero-field relative min-h-[760px] overflow-hidden bg-[#090a09] text-[#f5f0e7] md:min-h-[900px]">
+      <div className="hero-grid absolute inset-0 opacity-70" />
+      <div className="hero-vignette absolute inset-0" />
+      <div className="relative z-20 mx-auto grid max-w-[1440px] gap-2 px-5 pb-20 pt-44 md:grid-cols-[.94fr_1.06fr] md:px-10 md:pb-24 md:pt-52">
+        <div className="reveal relative z-10 max-w-[800px]">
+          <div className="mb-8 flex items-center gap-3 font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]"><span className="orange-rule" /> Media & creative platform / Indonesia</div>
+          <h1 className="hero-title font-display text-[clamp(4.3rem,10vw,10.8rem)] font-semibold leading-[.78] tracking-[-.085em]">Yang<br /><em className="not-italic text-[#ff5600]">menarik,</em><br />kami pajang<span className="text-[#ff5600]">.</span></h1>
+          <div className="mt-10 flex max-w-xl flex-col gap-8 md:flex-row md:items-end">
+            <p className="max-w-sm text-base leading-relaxed text-[#f5f0e7]/65 md:text-lg">Cerita, orang, budaya, dan momen yang layak dilihat dua kali. Dari sini, untuk siapa saja yang penasaran.</p>
+            <button onClick={() => scroll('#stories')} className="hero-pill flex w-fit items-center gap-3 rounded-full bg-[#f5f0e7] px-5 py-3 font-mono-custom text-[10px] uppercase tracking-[.14em] text-[#15120f] transition-colors hover:bg-[#ff5600]" data-testid="button-hero-explore">Jelajahi stories <ArrowDownRight size={15} /></button>
           </div>
         </div>
+        <div className="reveal reveal-delay-2 relative mt-2 min-h-[390px] md:mt-[-20px] md:min-h-[560px]">
+          <SignalGlobe />
+        </div>
       </div>
-      <div className="absolute bottom-6 left-5 z-20 font-mono-custom text-[10px] uppercase tracking-[.17em] text-[#f5f0e7]/50 md:left-10">01 / 08 — Selamat datang di meja kami</div>
+      <div className="absolute bottom-6 left-5 right-5 z-20 flex items-center justify-between border-t border-[#f5f0e7]/20 pt-4 font-mono-custom text-[10px] uppercase tracking-[.17em] text-[#f5f0e7]/50 md:left-10 md:right-10"><span>01 / 08 — Selamat datang di meja kami</span><span className="hidden md:inline">Scroll untuk membuka peta cerita <ArrowDownRight className="ml-2 inline" size={14} /></span></div>
     </section>
 
     <div className="overflow-hidden border-b border-[#15120f] bg-[#ff5600] py-4 text-[#15120f]">
       <div className="marquee-track flex items-center gap-8 font-display text-2xl font-semibold uppercase tracking-[-.03em] md:text-4xl">{Array.from({ length: 2 }).map((_, i) => <span key={i} className="flex items-center gap-8">Orang menarik <span className="text-[#f5f0e7]">+</span> Tempat yang punya cerita <span className="text-[#f5f0e7]">+</span> Karya yang bikin berhenti <span className="text-[#f5f0e7]">+</span></span>)}</div>
     </div>
+
+    <section className="bg-[#090a09] px-5 py-7 text-[#f5f0e7] md:px-10 md:py-10">
+      <div className="mx-auto grid max-w-[1440px] gap-5 md:grid-cols-[.7fr_1.3fr] md:items-center">
+        <div className="flex items-center gap-3 font-mono-custom text-[10px] uppercase tracking-[.16em] text-[#ff5600]"><MapPin size={15} /> Field index / 2026</div>
+        <div className="grid grid-cols-2 gap-4 border-l border-[#f5f0e7]/20 pl-5 sm:grid-cols-4">
+          {[['17', 'field notes'], ['08', 'active stories'], ['04', 'cities connected'], ['∞', 'ways to see']].map(([number, label]) => <div key={label}><strong className="font-display text-3xl font-semibold tracking-[-.06em] md:text-4xl">{number}</strong><span className="mt-1 block font-mono-custom text-[9px] uppercase tracking-[.12em] text-[#f5f0e7]/45">{label}</span></div>)}
+        </div>
+      </div>
+    </section>
 
     <section id="about" className="mx-auto grid max-w-[1440px] gap-12 px-5 py-24 md:grid-cols-[.65fr_1fr] md:px-10 md:py-36">
       <div><span className="font-mono-custom text-[10px] uppercase tracking-[.2em] text-[#ff5600]">02 / Cara kami melihat</span><div className="orange-rule mt-5" /></div>
