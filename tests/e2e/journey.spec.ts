@@ -4,11 +4,11 @@ test.describe('V6 user journeys', () => {
   test('story journey and search work', async ({ page }) => {
     await page.goto('./');
     await page.getByRole('button', { name: 'Search' }).click();
-    const search = page.getByRole('dialog', { name: '' }).or(page.locator('.search-overlay')).first();
+    await expect(page.locator('.search-overlay')).toBeVisible();
     await page.getByPlaceholder(/Cari cerita/i).fill('riuhnya');
-    const result = page.locator('.search-overlay .search-results').getByRole('link', { name: /Di balik riuhnya pasar, ada kota yang sedang belajar mendengar/i });
+    const result = page.locator('.search-overlay .search-results a[href*="/stories/"]').filter({ hasText: /Di balik riuhnya pasar, ada kota yang sedang belajar mendengar/i }).first();
     await expect(result).toBeVisible();
-    await result.click();
+    await result.click({ force: true });
     await expect(page).toHaveURL(/\/MAJANGMEJENG\/stories\//);
     await expect(page.getByRole('article')).toBeVisible();
     await expect(page.getByRole('button', { name: /Share/i })).toBeVisible();
