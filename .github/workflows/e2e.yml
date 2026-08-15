@@ -1,4 +1,4 @@
-name: Majang Mejeng V11 E2E
+name: Majang Mejeng V12.5 E2E
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: majang-mejeng-v11-e2e
+  group: majang-mejeng-v12-5-e2e
   cancel-in-progress: true
 
 jobs:
@@ -37,12 +37,12 @@ jobs:
         run: PORT=4173 BASE_PATH=/MAJANGMEJENG/ NODE_ENV=production pnpm --dir artifacts/majang-mejeng run build
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
-      - name: Run V11 browser journeys
+      - name: Run V12.5 browser journeys
         run: pnpm exec playwright test tests/e2e
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: majang-mejeng-v11-playwright-report
+          name: majang-mejeng-v12-5-playwright-report
           path: artifacts/majang-mejeng/playwright-report
           if-no-files-found: ignore
